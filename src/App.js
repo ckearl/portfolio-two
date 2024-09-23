@@ -1,14 +1,19 @@
 // src/App.js
 
-import './App.css';
-import Game from './Game';
+import './styles/App.css';
+import './styles/CustomFont.css'
+
+const customFontStyles = {
+	fontFamily: "CustomFont, sans-serif",
+};
 
 function App() {
   return (
-    <div className="App">
-      <Game />
-    </div>
-  );
+		<div className="App" style={customFontStyles}>
+      Hi, I'm still figuring this out.
+			{/* <Game /> */}
+		</div>
+	);
 }
 
 export default App;
