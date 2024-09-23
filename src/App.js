@@ -1,14 +1,12 @@
-import logo from './logo.svg';
+// src/App.js
+
 import './App.css';
+import Game from './Game';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Welcome to the portfolio of <code>Christopher Kearl</code>!
-        </p>
-      </header>
+      <Game />
     </div>
   );
 }
