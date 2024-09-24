@@ -7,6 +7,10 @@ const customFontStyles = {
 	fontFamily: "CustomFont, sans-serif",
 };
 
+// FEATURES TO ADD NEXT
+// https://codepen.io/delroyprithvi/pen/LYyJROR
+// https://css-tricks.com/snippets/css/typewriter-effect/
+
 function App() {
   return (
 		<div className="App" style={customFontStyles}>
