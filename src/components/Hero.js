@@ -6,6 +6,8 @@ const customFontStyles = {
 	fontFamily: "PressStart2P, sans-serif",
 };
 
+// please forgive me for this
+
 const PERSONAL_PHRASES = [
 	"I'm a software engineer",
 	"I'm a pianist",
