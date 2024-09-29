@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "../styles/Hero.css";
 import "../styles/CustomFont.css";
 
@@ -6,14 +6,13 @@ const customFontStyles = {
 	fontFamily: "PressStart2P, sans-serif",
 };
 
-// please forgive me for this
+// TODO: update personal phrases to be more creative
 
 const PERSONAL_PHRASES = [
 	"I'm a software engineer",
 	"I'm a pianist",
 	"I'm a mario fan",
 	"I'm a music producer",
-	"I'm a JavaScript truthiness hater",
 	"I'm a JavaScript truthiness hater",
 	"I'm a brother",
 	"I'm a son",
@@ -27,26 +26,54 @@ const PERSONAL_PHRASES = [
 ];
 
 const Hero = () => {
+	const [text, setText] = useState("");
+	const [isDeleting, setIsDeleting] = useState(false);
+	const [loopNum, setLoopNum] = useState(0);
+	const [typingSpeed, setTypingSpeed] = useState(150);
+
+	const tick = useCallback(() => {
+		let i = loopNum % PERSONAL_PHRASES.length;
+		let fullText = PERSONAL_PHRASES[i];
+		let updatedText = isDeleting
+			? fullText.substring(0, text.length - 1)
+			: fullText.substring(0, text.length + 1);
+
+		setText(updatedText);
+
+		if (isDeleting) {
+			setTypingSpeed(75);
+		}
+
+		if (!isDeleting && updatedText === fullText) {
+			setIsDeleting(true);
+			setTypingSpeed(3000);
+		} else if (isDeleting && updatedText === "") {
+			setIsDeleting(false);
+			setLoopNum(loopNum + 1);
+			setTypingSpeed(500);
+		} else {
+			setTypingSpeed(150);
+		}
+	}, [isDeleting, loopNum, text]);
+
 	useEffect(() => {
-		let currentPhraseIndex = 0;
-		const phraseElement = document.querySelector(".hero-typewriter span");
+		let ticker = setInterval(() => {
+			tick();
+		}, typingSpeed);
 
-		const updatePhrase = () => {
-			phraseElement.innerHTML = PERSONAL_PHRASES[currentPhraseIndex];
-			currentPhraseIndex = (currentPhraseIndex + 1) % PERSONAL_PHRASES.length;
+		return () => {
+			clearInterval(ticker);
 		};
-
-		updatePhrase();
-		setInterval(updatePhrase, 15000);
-	});
+	}, [text, tick, typingSpeed]);
 
 	return (
 		<div className="hero-container">
 			<span className="hero-title-text" style={customFontStyles}>
-				Hi, I'm still figuring this out
+				Hi, my name is Christopher Kearl.
+				Welcome to my portfolio!
 			</span>
 			<div className="hero-typewriter">
-				<span className="">I'm a software engineer</span>
+				<span>{text}</span>
 			</div>
 		</div>
 	);
