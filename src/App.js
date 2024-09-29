@@ -1,9 +1,9 @@
 // src/App.js
 
-import "./styles/App.css";
-import "./components/Hero.js";
-import Hero from "./components/Hero.js";
 import React from "react";
+import CodeLogoShootingStars from "./components/CodeLogoShootingStars.js";
+import Hero from "./components/Hero.js";
+import "./styles/App.css";
 
 // FEATURES TO ADD NEXT
 // https://codepen.io/delroyprithvi/pen/LYyJROR
@@ -14,6 +14,7 @@ function App() {
 		<React.Fragment>
 			<div className="App">
 				<Hero />
+				<CodeLogoShootingStars />
 			</div>
 		</React.Fragment>
 	);
