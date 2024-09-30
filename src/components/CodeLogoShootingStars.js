@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../styles/CodeLogoShootingStars.css";
 
 const FILE_NAMES = ["aws.png", "git.png", "js.png", "rust.png"];
 
 const CodeLogoShootingStars = () => {
 	const [stars, setStars] = useState([]);
+	const containerRef = useRef(null);
 
 	const createStar = () => {
 		const randomImage =
@@ -35,16 +36,18 @@ const CodeLogoShootingStars = () => {
 	}, []);
 
 	return (
-		<div className="logo-shooting-stars-container">
-			{stars.map((star) => (
-				<img
-					key={star.id}
-					src={`/path/to/your/images/${star.image}`}
-					alt="Falling logo"
-					className="falling-logo"
-					style={star.style}
-				/>
-			))}
+		<div className="logo-shooting-stars-section" ref={containerRef}>
+			<div className="logo-shooting-stars-container">
+				{stars.map((star) => (
+					<img
+						key={star.id}
+						src={`/path/to/your/images/${star.image}`}
+						alt="Falling logo"
+						className="falling-logo"
+						style={star.style}
+					/>
+				))}
+			</div>
 		</div>
 	);
 };
