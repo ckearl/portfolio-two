@@ -17,10 +17,17 @@
 .falling-logo {
     position: absolute;
     top: -250px;
-    width: 30px;
-    height: 30px;
     object-fit: contain;
     animation: fall linear forwards;
+}
+
+.trail-particle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: rgb(0, 0, 0);
+    border-radius: 50%;
+    animation: fade 1s linear forwards;
 }
 
 @keyframes fall {
@@ -30,7 +37,19 @@
     }
 
     100% {
-        transform: translateY(calc(100% + 700px)) translateX(-100px);
+        transform: translateY(calc(100vh + 250px)) translateX(-100px);
         opacity: 0;
+    }
+}
+
+@keyframes fade {
+    0% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(0.5);
     }
 }
