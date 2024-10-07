@@ -3,6 +3,7 @@
 import React from "react";
 import CodeLogoShootingStars from "./components/CodeLogoShootingStars.js";
 import Hero from "./components/Hero.js";
+import Games from "./components/Games.js";
 import "./styles/App.css";
 
 // FEATURES TO ADD NEXT
@@ -15,6 +16,7 @@ function App() {
 			<div className="App">
 				<Hero />
 				<CodeLogoShootingStars />
+				<Games />
 			</div>
 		</React.Fragment>
 	);
