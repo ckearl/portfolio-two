@@ -38,7 +38,19 @@ export default function BallCanvas() {
 			isStatic: true,
 			restitution: 0.2,
 		});
+
 		World.add(engine.world, floor);
+
+		const leftWall = Bodies.rectangle(-25, height / 2, 50, height, {
+			isStatic: true,
+			restitution: 0.2,
+		});
+		const rightWall = Bodies.rectangle(width + 25, height / 2, 50, height, {
+			isStatic: true,
+			restitution: 0.2,
+		});
+
+		World.add(engine.world, [leftWall, rightWall]);
 
 		const runner = Runner.create();
 		Render.run(render);
@@ -66,15 +78,47 @@ export default function BallCanvas() {
 		let raf: number;
 
 		const draw = () => {
+			const width = window.innerWidth;
+			const height = window.innerHeight;
+
 			ctx.clearRect(0, 0, width, height);
+
 			if (isDragging && start && currentMouse) {
-				ctx.beginPath();
-				ctx.moveTo(start.x, start.y);
-				ctx.lineTo(currentMouse.x, currentMouse.y);
-				ctx.strokeStyle = "red";
-				ctx.lineWidth = 2;
-				ctx.stroke();
+				// Calculate launch vector
+				const dx = start.x - currentMouse.x;
+				const dy = start.y - currentMouse.y;
+				const power = Math.sqrt(dx * dx + dy * dy) * 0.005;
+				const angle = Math.atan2(dy, dx);
+				const velocity = {
+					x: power * Math.cos(angle),
+					y: power * Math.sin(angle),
+				};
+
+				// Simulate arc
+				const g = 0.98 * 120; // gravity approximation in px/s^2
+				let x = start.x;
+				let y = start.y;
+				let vx = velocity.x * 60; // convert to px/frame
+				let vy = velocity.y * 60;
+
+				ctx.fillStyle = "rgba(0,0,0,0.3)";
+
+				const step = 0.1;
+
+				ctx.fillStyle = "rgba(0,0,0,0.3)";
+				for (let i = 0; i < 50; i++) {
+					x += vx * step;
+					y += vy * step;
+					vy += g * 0.00725;
+
+					if (y > height) break;
+
+					ctx.beginPath();
+					ctx.arc(x, y, 2, 0, Math.PI * 2);
+					ctx.fill();
+				}
 			}
+
 			raf = requestAnimationFrame(draw);
 		};
 
@@ -117,12 +161,14 @@ export default function BallCanvas() {
 			y: power * Math.sin(angle),
 		};
 
-		const ball = Bodies.circle(start.x, start.y, 10, {
+		const ball = Bodies.circle(start.x, start.y, 35, {
 			restitution: 0.6,
 			friction: 0.05,
 			density: 0.01,
 		});
+
 		Body.setVelocity(ball, velocity);
+		ball.render.fillStyle = "#33333380";
 		World.add(engineRef.current.world, ball);
 	};
 
