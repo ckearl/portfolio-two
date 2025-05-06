@@ -1,116 +1,391 @@
-import React from "react";
-import Link from "next/link";
+"use client";
+
+import { useState, useEffect, useRef, SetStateAction } from "react";
+import { Github, Mail, FileText, Linkedin, Menu, X } from "lucide-react";
 
 export default function Home() {
+	const [activeSection, setActiveSection] = useState("about");
+	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+	const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+	const [isHovering, setIsHovering] = useState(false);
+
+	const sectionRefs = {
+		about: useRef(null),
+		experience: useRef(null),
+		projects: useRef(null),
+		contact: useRef(null),
+	};
+
+	// Custom cursor effect
+	useEffect(() => {
+		const handleMouseMove = (e: { clientX: any; clientY: any; }) => {
+			setCursorPosition({ x: e.clientX, y: e.clientY });
+		};
+
+		window.addEventListener("mousemove", handleMouseMove);
+		return () => {
+			window.removeEventListener("mousemove", handleMouseMove);
+		};
+	}, []);
+
+	// Intersection observer for section detection
+	useEffect(() => {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						setActiveSection(entry.target.id);
+					}
+				});
+			},
+			{ threshold: 0.5 }
+		);
+
+		Object.values(sectionRefs).forEach(
+			(ref) => ref.current && observer.observe(ref.current)
+		);
+
+		return () => {
+			Object.values(sectionRefs).forEach(
+				(ref) => ref.current && observer.unobserve(ref.current)
+			);
+		};
+	}, []);
+
+	// Scroll to section function
+	const scrollToSection = (sectionId) => {
+		sectionRefs[sectionId].current?.scrollIntoView({ behavior: "smooth" });
+		setActiveSection(sectionId);
+		setMobileMenuOpen(false);
+	};
+
+	const projects = [
+		{
+			title: "KeyCoach",
+			description:
+				"An AI-powered typing tutor that tracks the hands of a typist to detect technique errors.",
+			tech: ["Next.JS", "ML5.JS", "Typescript React", "3D CAD Modeling"],
+			link: "https://keycoa.ch/",
+		},
+		{
+			title: "KeyCoach",
+			description:
+				"An AI-powered typing tutor that tracks the hands of a typist to detect technique errors.",
+			tech: ["Next.JS", "ML5.JS", "Typescript React", "3D CAD Modeling"],
+			link: "https://keycoa.ch/",
+		},
+		{
+			title: "Go",
+			description: "A Mobile game of the board game Go (wéiqí, Baduk, cờ vây).",
+			tech: ["React Native"],
+			link: "https://github.com/ckearl/Go",
+		},
+		{
+			title: "Claude CLI Application",
+			description:
+				"A terminal application to interact with the Anthropic/Claude API.",
+			tech: ["Rust", "reqwest"],
+			link: "https://github.com/ckearl",
+		},
+	];
+
+	const experiences = [
+		{
+			role: "Cloud Compliance Engineer",
+			company: "Marriott International",
+			period: "2024 - Present",
+			description:
+				"Develop interactive glossary of security controls for enterprise cloud platform. Maintain security and compliance protocols for all production cloud service environments.",
+		},
+		{
+			role: "Adjust Professor",
+			company: "BYU Marriott School of Business",
+			period: "2024 - Present",
+			description:
+				"Engineered new curriculum for Introduction to Web Development course in the Information Systems program. Prepared lecture materials, assignments, classroom activities, projects, and exams for classroom of 25 students across two different semesters.",
+		},
+		{
+			role: "Data Engineer Intern",
+			company: "Pattern",
+			period: "Summer 2023",
+			description:
+				"Developed datastreams and API endpoints for FE teams to build more features.",
+		},
+		{
+			role: "Teaching Assistant",
+			company: "BYU Marriott School of Business",
+			period: "2022 - 2023",
+			description:
+				"Managed course curriculum, grading standards, and academic progress for 60+ students in courses.",
+		},
+		{
+			role: "Web Developer",
+			company: "Contour Software",
+			period: "2021 - 2022",
+			description:
+				"Launched paperless work environment transition for client by engineering project information entry application.",
+		},
+	];
+
 	return (
-		<main className="min-h-screen bg-eggshell-600 text-gunmetal-800">
-			<header className="w-full border-b border-cadet-300 px-6 py-4 flex justify-between items-center bg-columbia-600">
-				<h1 className="text-xl font-bold text-charcoal-700">
-					Christopher Kearl
-				</h1>
-				<nav className="space-x-4 text-charcoal-700">
-					<Link href="/" className="hover:underline">
-						Home
-					</Link>
-					<Link href="/resume" className="hover:underline">
-						Resume
-					</Link>
-					<Link href="/projects" className="hover:underline">
-						Projects
-					</Link>
-					<Link href="/contact" className="hover:underline">
-						Contact
-					</Link>
-				</nav>
-			</header>
+		<div className="bg-white min-h-screen text-neutral-800 relative overflow-x-hidden font-light">
+			{/* Custom cursor */}
+			<div
+				className={`fixed w-8 h-8 rounded-full border border-neutral-800 pointer-events-none z-50 mix-blend-difference transition-transform duration-300 ${
+					isHovering ? "scale-150" : "scale-100"
+				}`}
+				style={{
+					left: `${cursorPosition.x}px`,
+					top: `${cursorPosition.y}px`,
+					transform: "translate(-50%, -50%)",
+				}}
+			/>
 
-			<section className="px-6 py-12 text-center">
-				<h2 className="text-4xl font-bold mb-4 text-charcoal-700">
-					Hi, I'm Christopher Kearl
-				</h2>
-				<p className="max-w-2xl mx-auto text-lg text-cadet-600">
-					I'm a developer, problem-solver, and creative thinker who builds tools
-					and experiences that make people's lives better. This site showcases
-					some of the work I've done, the projects I've loved, and how to get in
-					touch.
-				</p>
-			</section>
-
-			<section className="bg-white py-16 px-6">
-				<div className="max-w-4xl mx-auto">
-					<h3 className="text-2xl font-bold mb-6 text-gunmetal-800">
-						Featured Projects
-					</h3>
-					<ul className="space-y-8">
-						<li className="border border-cadet-300 p-6 rounded-lg shadow-sm bg-columbia-100">
-							<h4 className="text-xl font-semibold text-charcoal-700">
-								BYU Egypt
-							</h4>
-							<p className="text-gunmetal-700">
-								Dashboard for BYU’s archaeological research with complex
-								artifact tracking. Won "Best Filtering Algorithm" at BYU IS
-								Hackathon.
-							</p>
-						</li>
-						<li className="border border-cadet-300 p-6 rounded-lg shadow-sm bg-columbia-100">
-							<h4 className="text-xl font-semibold text-charcoal-700">
-								Whealth
-							</h4>
-							<p className="text-gunmetal-700">
-								Smart recipe searcher using Spoonacular API to generate meals
-								from ingredients you already have.
-							</p>
-						</li>
-						<li className="border border-cadet-900 p-6 rounded-lg shadow-sm bg-columbia-100">
-							<h4 className="text-xl font-semibold text-charcoal-700">
-								Spotify Playlist Builder
-							</h4>
-							<p className="text-gunmetal-700">
-								Automatically generates playlists based on tempo, artist,
-								listening habits, and more.
-							</p>
-						</li>
-						<li className="border border-cadet-300 p-6 rounded-lg shadow-sm bg-columbia-100">
-							<h4 className="text-xl font-semibold text-charcoal-700">
-								RaspberryPi DNS Server
-							</h4>
-							<p className="text-gunmetal-700">
-								Personal RaspberryPi project to host all portfolio projects
-								affordably.
-							</p>
-						</li>
-						<li className="border border-cadet-300 p-6 rounded-lg shadow-sm bg-columbia-100">
-							<h4 className="text-xl font-semibold text-charcoal-700">
-								Intercontinentle
-							</h4>
-							<p className="text-gunmetal-700">
-								Trivia game challenging players to guess countries based on
-								layered geographical clues.
-							</p>
-						</li>
-					</ul>
+			{/* Navigation - Desktop */}
+			<nav className="fixed top-0 left-0 w-full h-16 bg-white/80 backdrop-blur-sm z-40 hidden md:block">
+				<div className="container mx-auto px-6 h-full flex items-center justify-between">
+					<div
+						className="text-lg font-medium cursor-pointer"
+						onMouseEnter={() => setIsHovering(true)}
+						onMouseLeave={() => setIsHovering(false)}
+						onClick={() => scrollToSection("about")}
+					>
+						Christopher Kearl
+					</div>
+					<div className="flex gap-8">
+						{Object.keys(sectionRefs).map((section) => (
+							<div
+								key={section}
+								className={`capitalize cursor-pointer transition-colors duration-300 ${
+									activeSection === section
+										? "text-neutral-800"
+										: "text-neutral-400"
+								}`}
+								onClick={() => scrollToSection(section)}
+								onMouseEnter={() => setIsHovering(true)}
+								onMouseLeave={() => setIsHovering(false)}
+							>
+								{section}
+							</div>
+						))}
+					</div>
 				</div>
-			</section>
+			</nav>
 
-			<section className="bg-cadet-900">
-				<p className="text-cadet-900">hi example section</p>
-			</section>
-
-			<section className="py-12 bg-gradient-to-r from-gunmetal-800 via-charcoal-700 to-cadet-600 text-eggshell-100 text-center">
-				<h3 className="text-3xl font-bold mb-4">
-					Let's build something together
-				</h3>
-				<Link
-					href="/contact"
-					className="inline-block mt-4 px-6 py-3 bg-eggshell-200 text-gunmetal-800 font-semibold rounded shadow hover:bg-cadet-400 hover:text-white"
+			{/* Navigation - Mobile */}
+			<nav className="fixed top-0 left-0 w-full h-16 bg-white/80 backdrop-blur-sm z-40 flex md:hidden items-center justify-between px-6">
+				<div className="text-lg font-medium">Christopher Kearl</div>
+				<button
+					className="focus:outline-none"
+					onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
 				>
-					Contact Me
-				</Link>
-			</section>
+					{mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+				</button>
+			</nav>
 
-			<footer className="text-center py-6 text-sm text-cadet-600">
-				&copy; {new Date().getFullYear()} Christopher Kearl
+			{/* Mobile Menu */}
+			{mobileMenuOpen && (
+				<div className="fixed inset-0 bg-white z-30 pt-16 px-6 flex flex-col items-center justify-center md:hidden">
+					<div className="flex flex-col gap-8 items-center">
+						{Object.keys(sectionRefs).map((section) => (
+							<div
+								key={section}
+								className={`capitalize text-lg cursor-pointer ${
+									activeSection === section
+										? "text-neutral-800"
+										: "text-neutral-400"
+								}`}
+								onClick={() => scrollToSection(section)}
+							>
+								{section}
+							</div>
+						))}
+					</div>
+				</div>
+			)}
+
+			{/* Main Content */}
+			<main className="container mx-auto px-6 pt-24 pb-16">
+				{/* About Section */}
+				<section
+					id="about"
+					ref={sectionRefs.about}
+					className="min-h-screen flex flex-col justify-center"
+				>
+					<div className="max-w-3xl">
+						<h1 className="text-5xl md:text-7xl font-light mb-8 leading-tight">
+							<span className="block">Hello, I'm Christopher.</span>
+							<span className="block text-neutral-400">
+								Full Stack Developer.
+							</span>
+						</h1>
+						<p className="text-lg md:text-xl text-neutral-600 mb-12 leading-relaxed">
+							I build thoughtful, accessible, and engaging web experiences that
+							bridge the gap between user needs and business goals.
+						</p>
+						<div className="flex flex-wrap gap-4">
+							<a
+								href="https://github.com/ckearl"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="group flex items-center gap-2 border border-neutral-200 px-4 py-2 rounded-full hover:bg-neutral-800 hover:text-white transition-colors duration-300"
+								onMouseEnter={() => setIsHovering(true)}
+								onMouseLeave={() => setIsHovering(false)}
+							>
+								<Github size={16} />
+								<span>GitHub</span>
+							</a>
+							<a
+								href="https://www.linkedin.com/in/christopher-kearl/"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="group flex items-center gap-2 border border-neutral-200 px-4 py-2 rounded-full hover:bg-neutral-800 hover:text-white transition-colors duration-300"
+								onMouseEnter={() => setIsHovering(true)}
+								onMouseLeave={() => setIsHovering(false)}
+							>
+								<Linkedin size={16} />
+								<span>LinkedIn</span>
+							</a>
+							<a
+								href="#"
+								className="group flex items-center gap-2 border border-neutral-200 px-4 py-2 rounded-full hover:bg-neutral-800 hover:text-white transition-colors duration-300"
+								onMouseEnter={() => setIsHovering(true)}
+								onMouseLeave={() => setIsHovering(false)}
+							>
+								<FileText size={16} />
+								<span>Resume</span>
+							</a>
+						</div>
+					</div>
+				</section>
+
+				{/* Experience Section */}
+				<section
+					id="experience"
+					ref={sectionRefs.experience}
+					className="min-h-screen flex flex-col justify-center py-16"
+				>
+					<h2 className="text-3xl md:text-4xl font-light mb-12">Experience</h2>
+					<div className="grid gap-12">
+						{experiences.map((exp, index) => (
+							<div
+								key={index}
+								className="border-t border-neutral-200 pt-8 grid md:grid-cols-4 gap-6"
+								onMouseEnter={() => setIsHovering(true)}
+								onMouseLeave={() => setIsHovering(false)}
+							>
+								<div className="md:col-span-1">
+									<p className="text-neutral-400">{exp.period}</p>
+								</div>
+								<div className="md:col-span-3">
+									<h3 className="text-xl font-medium mb-2">{exp.role}</h3>
+									<p className="text-neutral-600 mb-4">{exp.company}</p>
+									<p className="text-neutral-600">{exp.description}</p>
+								</div>
+							</div>
+						))}
+					</div>
+				</section>
+
+				{/* Projects Section */}
+				<section
+					id="projects"
+					ref={sectionRefs.projects}
+					className="min-h-screen flex flex-col justify-center py-16"
+				>
+					<h2 className="text-3xl md:text-4xl font-light mb-12">Projects</h2>
+					<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+						{projects.map((project, index) => (
+							<a
+								key={index}
+								href={project.link}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="border border-neutral-200 p-6 rounded-lg transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+								onMouseEnter={() => setIsHovering(true)}
+								onMouseLeave={() => setIsHovering(false)}
+							>
+								<h3 className="text-xl font-medium mb-3">{project.title}</h3>
+								<p className="text-neutral-600 mb-6">{project.description}</p>
+								<div className="flex flex-wrap gap-2 mb-4">
+									{project.tech.map((tech, techIndex) => (
+										<span
+											key={techIndex}
+											className="text-xs bg-neutral-100 px-2 py-1 rounded"
+										>
+											{tech}
+										</span>
+									))}
+								</div>
+							</a>
+						))}
+					</div>
+				</section>
+
+				{/* Contact Section */}
+				<section
+					id="contact"
+					ref={sectionRefs.contact}
+					className="min-h-screen flex flex-col justify-center py-16"
+				>
+					<h2 className="text-3xl md:text-4xl font-light mb-12">Contact</h2>
+					<div className="max-w-xl">
+						<p className="text-lg text-neutral-600 mb-8">
+							I'm currently open to new opportunities. Whether you have a
+							question or just want to say hi, I'll try my best to get back to
+							you!
+						</p>
+						<a
+							href="mailto:hello@example.com"
+							className="inline-flex items-center gap-2 border border-neutral-800 bg-neutral-800 text-white px-6 py-3 rounded-full hover:bg-white hover:text-neutral-800 transition-colors duration-300"
+							onMouseEnter={() => setIsHovering(true)}
+							onMouseLeave={() => setIsHovering(false)}
+						>
+							<Mail size={16} />
+							<span>Send me an email</span>
+						</a>
+					</div>
+				</section>
+			</main>
+
+			{/* Footer */}
+			<footer className="container mx-auto px-6 py-8 border-t border-neutral-200">
+				<div className="flex flex-col md:flex-row justify-between items-center gap-4">
+					<p className="text-neutral-600">
+						© {new Date().getFullYear()} Christopher Kearl. All rights reserved.
+					</p>
+					<div className="flex gap-6">
+						<a
+							href="https://github.com/ckearl"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="text-neutral-600 hover:text-neutral-800 transition-colors duration-300"
+							onMouseEnter={() => setIsHovering(true)}
+							onMouseLeave={() => setIsHovering(false)}
+						>
+							<Github size={20} />
+						</a>
+						<a
+							href="https://linkedin.com/in/example"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="text-neutral-600 hover:text-neutral-800 transition-colors duration-300"
+							onMouseEnter={() => setIsHovering(true)}
+							onMouseLeave={() => setIsHovering(false)}
+						>
+							<Linkedin size={20} />
+						</a>
+						<a
+							href="mailto:hello@example.com"
+							className="text-neutral-600 hover:text-neutral-800 transition-colors duration-300"
+							onMouseEnter={() => setIsHovering(true)}
+							onMouseLeave={() => setIsHovering(false)}
+						>
+							<Mail size={20} />
+						</a>
+					</div>
+				</div>
 			</footer>
-		</main>
+		</div>
 	);
 }
