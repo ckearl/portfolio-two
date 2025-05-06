@@ -136,10 +136,10 @@ export default function Home() {
 	];
 
 	return (
-		<div className="bg-white min-h-screen text-neutral-800 relative overflow-x-hidden font-light">
+		<div className="bg-white dark:bg-neutral-900 text-neutral-800 dark:text-neutral-100 min-h-screen relative overflow-x-hidden font-light">
 			{/* Custom cursor */}
 			<div
-				className={`fixed w-8 h-8 rounded-full border border-neutral-800 pointer-events-none z-50 mix-blend-difference transition-transform duration-300 ${
+				className={`fixed w-8 h-8 rounded-full border border-neutral-800 dark:border-neutral-100 pointer-events-none z-50 mix-blend-difference transition-transform duration-300 ${
 					isHovering ? "scale-150" : "scale-100"
 				}`}
 				style={{
@@ -150,7 +150,7 @@ export default function Home() {
 			/>
 
 			{/* Navigation - Desktop */}
-			<nav className="fixed top-0 left-0 w-full h-16 bg-white/80 backdrop-blur-sm z-40 hidden md:block">
+			<nav className="fixed top-0 left-0 w-full h-16 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-sm z-40 hidden md:block">
 				<div className="container mx-auto px-6 h-full flex items-center justify-between">
 					<div
 						className="text-lg font-medium cursor-pointer"
@@ -227,7 +227,7 @@ export default function Home() {
 								Full Stack Developer.
 							</span>
 						</h1>
-						<p className="text-lg md:text-xl text-neutral-600 mb-12 leading-relaxed">
+						<p className="text-lg md:text-xl text-neutral-600 dark:text-neutral-500 mb-12 leading-relaxed">
 							I build thoughtful, accessible, and engaging web experiences that
 							bridge the gap between user needs and business goals.
 						</p>
@@ -236,7 +236,7 @@ export default function Home() {
 								href="https://github.com/ckearl"
 								target="_blank"
 								rel="noopener noreferrer"
-								className="group flex items-center gap-2 border border-neutral-200 px-4 py-2 rounded-full hover:bg-neutral-800 hover:text-white transition-colors duration-300"
+								className="group flex items-center gap-2 border border-neutral-200 dark:border-neutral-700 px-4 py-2 rounded-full hover:bg-neutral-800 hover:text-white transition-colors duration-300"
 								onMouseEnter={() => setIsHovering(true)}
 								onMouseLeave={() => setIsHovering(false)}
 							>
@@ -247,7 +247,7 @@ export default function Home() {
 								href="https://www.linkedin.com/in/christopher-kearl/"
 								target="_blank"
 								rel="noopener noreferrer"
-								className="group flex items-center gap-2 border border-neutral-200 px-4 py-2 rounded-full hover:bg-neutral-800 hover:text-white transition-colors duration-300"
+								className="group flex items-center gap-2 border border-neutral-200 dark:border-neutral-700 px-4 py-2 rounded-full hover:bg-neutral-800 hover:text-white transition-colors duration-300"
 								onMouseEnter={() => setIsHovering(true)}
 								onMouseLeave={() => setIsHovering(false)}
 							>
@@ -256,7 +256,7 @@ export default function Home() {
 							</a>
 							<a
 								href="#"
-								className="group flex items-center gap-2 border border-neutral-200 px-4 py-2 rounded-full hover:bg-neutral-800 hover:text-white transition-colors duration-300"
+								className="group flex items-center gap-2 border border-neutral-200 dark:border-neutral-700 px-4 py-2 rounded-full hover:bg-neutral-800 hover:text-white transition-colors duration-300"
 								onMouseEnter={() => setIsHovering(true)}
 								onMouseLeave={() => setIsHovering(false)}
 							>
@@ -284,12 +284,18 @@ export default function Home() {
 									onMouseLeave={() => setIsHovering(false)}
 								>
 									<div className="md:col-span-1">
-										<p className="text-neutral-400">{exp.period}</p>
+										<p className="text-neutral-400 dark:text-neutral-400">
+											{exp.period}
+										</p>
 									</div>
 									<div className="md:col-span-3">
 										<h3 className="text-xl font-medium mb-2">{exp.role}</h3>
-										<p className="text-neutral-600 mb-4">{exp.company}</p>
-										<p className="text-neutral-600">{exp.description}</p>
+										<p className="text-neutral-600 dark:text-neutral-300 mb-4">
+											{exp.company}
+										</p>
+										<p className="text-neutral-600 dark:text-neutral-300">
+											{exp.description}
+										</p>
 									</div>
 								</div>
 							)
@@ -298,7 +304,7 @@ export default function Home() {
 					{experiences.length > 3 && (
 						<button
 							onClick={() => setShowAllExperiences(!showAllExperiences)}
-							className="mt-8 self-center border border-neutral-200 px-4 py-2 rounded-full hover:bg-neutral-800 hover:text-white transition-colors duration-300"
+							className="mt-8 self-center border border-neutral-200 dark:border-neutral-700 px-4 py-2 rounded-full hover:bg-neutral-800 hover:text-white transition-colors duration-300"
 							onMouseEnter={() => setIsHovering(true)}
 							onMouseLeave={() => setIsHovering(false)}
 						>
@@ -321,17 +327,19 @@ export default function Home() {
 								href={project.link}
 								target="_blank"
 								rel="noopener noreferrer"
-								className="border border-neutral-200 p-6 rounded-lg transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+								className="border border-neutral-200 dark:border-neutral-700 p-6 rounded-lg transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
 								onMouseEnter={() => setIsHovering(true)}
 								onMouseLeave={() => setIsHovering(false)}
 							>
 								<h3 className="text-xl font-medium mb-3">{project.title}</h3>
-								<p className="text-neutral-600 mb-6">{project.description}</p>
+								<p className="text-neutral-600 dark:text-neutral-400 mb-6">
+									{project.description}
+								</p>
 								<div className="flex flex-wrap gap-2 mb-4">
 									{project.tech.map((tech, techIndex) => (
 										<span
 											key={techIndex}
-											className="text-xs bg-neutral-100 px-2 py-1 rounded"
+											className="text-xs bg-neutral-100 dark:bg-neutral-800 px-2 py-1 rounded"
 										>
 											{tech}
 										</span>
@@ -348,12 +356,10 @@ export default function Home() {
 					ref={sectionRefs.contact}
 					className="min-h-screen flex flex-col justify-center py-16"
 				>
-					<h2 className="text-3xl md:text-4xl font-light mb-12">Contact</h2>
+					<h2 className="text-3xl md:text-4xl font-light mb-8">Contact</h2>
 					<div className="max-w-xl">
-						<p className="text-lg text-neutral-600 mb-8">
-							I'm currently open to new opportunities. Whether you have a
-							question or just want to say hi, I'll try my best to get back to
-							you!
+						<p className="text-lg text-neutral-600 dark:text-neutral-400 mb-8">
+							It's nice to meet you! Reach out to connect or collaborate on a project.
 						</p>
 						<a
 							href="mailto:hello@example.com"
@@ -371,7 +377,7 @@ export default function Home() {
 			{/* Footer */}
 			<footer className="container mx-auto px-6 py-8 border-t border-neutral-200">
 				<div className="flex flex-col md:flex-row justify-between items-center gap-4">
-					<p className="text-neutral-600">
+					<p className="text-neutral-600 dark:text-neutral-400">
 						© {new Date().getFullYear()} Christopher Kearl. All rights reserved.
 					</p>
 					<div className="flex gap-6">
@@ -379,25 +385,25 @@ export default function Home() {
 							href="https://github.com/ckearl"
 							target="_blank"
 							rel="noopener noreferrer"
-							className="text-neutral-600 hover:text-neutral-800 transition-colors duration-300"
+							className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-800 transition-colors duration-300"
 							onMouseEnter={() => setIsHovering(true)}
 							onMouseLeave={() => setIsHovering(false)}
 						>
 							<Github size={20} />
 						</a>
 						<a
-							href="https://linkedin.com/in/example"
+							href="https://www.linkedin.com/in/christopher-kearl/"
 							target="_blank"
 							rel="noopener noreferrer"
-							className="text-neutral-600 hover:text-neutral-800 transition-colors duration-300"
+							className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-800 transition-colors duration-300"
 							onMouseEnter={() => setIsHovering(true)}
 							onMouseLeave={() => setIsHovering(false)}
 						>
 							<Linkedin size={20} />
 						</a>
 						<a
-							href="mailto:hello@example.com"
-							className="text-neutral-600 hover:text-neutral-800 transition-colors duration-300"
+							href="mailto:ctrkearl@gmail.com"
+							className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-800 transition-colors duration-300"
 							onMouseEnter={() => setIsHovering(true)}
 							onMouseLeave={() => setIsHovering(false)}
 						>
