@@ -8,19 +8,29 @@ const BallCanvas = dynamic(() => import("./components/BallCanvas"), {
 	ssr: false,
 });
 
+
 export default function Home() {
-	const [activeSection, setActiveSection] = useState("about");
+  const [activeSection, setActiveSection] = useState("about");
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 	const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 	const [isHovering, setIsHovering] = useState(false);
   const [showAllExperiences, setShowAllExperiences] = useState(false);
-
-	const sectionRefs = {
-		about: useRef(null),
-		experience: useRef(null),
-		projects: useRef(null),
-		contact: useRef(null),
+  
+	const sectionRefs: {
+		about: React.RefObject<HTMLElement | null>;
+		experience: React.RefObject<HTMLElement | null>;
+		projects: React.RefObject<HTMLElement | null>;
+		contact: React.RefObject<HTMLElement | null>;
+	} = {
+		about: useRef<HTMLElement | null>(null),
+		experience: useRef<HTMLElement | null>(null),
+		projects: useRef<HTMLElement | null>(null),
+		contact: useRef<HTMLElement | null>(null),
 	};
+
+
+  
+  type SectionId = keyof typeof sectionRefs;
 
 	// Custom cursor effect
 	useEffect(() => {
@@ -59,8 +69,8 @@ export default function Home() {
 	}, []);
 
 	// Scroll to section function
-	const scrollToSection = (sectionId) => {
-		sectionRefs[sectionId].current?.scrollIntoView({ behavior: "smooth" });
+	const scrollToSection = (sectionId: SectionId) => {
+    sectionRefs[sectionId].current?.scrollIntoView({ behavior: "smooth" });
 		setActiveSection(sectionId);
 		setMobileMenuOpen(false);
 	};
@@ -169,7 +179,7 @@ export default function Home() {
 						Christopher Kearl
 					</div>
 					<div className="flex gap-8">
-						{Object.keys(sectionRefs).map((section) => (
+						{(Object.keys(sectionRefs) as SectionId[]).map((section) => (
 							<div
 								key={section}
 								className={`capitalize cursor-pointer transition-colors duration-300 ${
@@ -203,7 +213,7 @@ export default function Home() {
 			{mobileMenuOpen && (
 				<div className="fixed inset-0 bg-white z-30 pt-16 px-6 flex flex-col items-center justify-center md:hidden">
 					<div className="flex flex-col gap-8 items-center">
-						{Object.keys(sectionRefs).map((section) => (
+						{(Object.keys(sectionRefs) as SectionId[]).map((section) => (
 							<div
 								key={section}
 								className={`capitalize text-lg cursor-pointer ${
@@ -244,7 +254,7 @@ export default function Home() {
 								href="https://github.com/ckearl"
 								target="_blank"
 								rel="noopener noreferrer"
-								className="group flex items-center gap-2 border border-neutral-200 dark:border-neutral-700 px-4 py-2 rounded-full hover:bg-neutral-800 hover:text-white transition-colors duration-300"
+								className="group flex items-center gap-2 border border-neutral-200 dark:border-neutral-700 px-4 py-2 rounded-full hover:bg-neutral-800 hover:text-white transition-colors duration-300 z-10"
 								onMouseEnter={() => setIsHovering(true)}
 								onMouseLeave={() => setIsHovering(false)}
 							>
@@ -255,7 +265,7 @@ export default function Home() {
 								href="https://www.linkedin.com/in/christopher-kearl/"
 								target="_blank"
 								rel="noopener noreferrer"
-								className="group flex items-center gap-2 border border-neutral-200 dark:border-neutral-700 px-4 py-2 rounded-full hover:bg-neutral-800 hover:text-white transition-colors duration-300"
+								className="group flex items-center gap-2 border border-neutral-200 dark:border-neutral-700 px-4 py-2 rounded-full hover:bg-neutral-800 hover:text-white transition-colors duration-300 z-10"
 								onMouseEnter={() => setIsHovering(true)}
 								onMouseLeave={() => setIsHovering(false)}
 							>
@@ -264,7 +274,7 @@ export default function Home() {
 							</a>
 							<a
 								href="#"
-								className="group flex items-center gap-2 border border-neutral-200 dark:border-neutral-700 px-4 py-2 rounded-full hover:bg-neutral-800 hover:text-white transition-colors duration-300"
+								className="group flex items-center gap-2 border border-neutral-200 dark:border-neutral-700 px-4 py-2 rounded-full hover:bg-neutral-800 hover:text-white transition-colors duration-300 z-10"
 								onMouseEnter={() => setIsHovering(true)}
 								onMouseLeave={() => setIsHovering(false)}
 							>
@@ -312,7 +322,7 @@ export default function Home() {
 					{experiences.length > 3 && (
 						<button
 							onClick={() => setShowAllExperiences(!showAllExperiences)}
-							className="mt-8 self-center border border-neutral-200 dark:border-neutral-700 px-4 py-2 rounded-full hover:bg-neutral-800 hover:text-white transition-colors duration-300"
+							className="mt-8 self-center border border-neutral-200 dark:border-neutral-700 px-4 py-2 rounded-full hover:bg-neutral-800 hover:text-white transition-colors duration-300 z-10 hover:pointer"
 							onMouseEnter={() => setIsHovering(true)}
 							onMouseLeave={() => setIsHovering(false)}
 						>
@@ -335,7 +345,7 @@ export default function Home() {
 								href={project.link}
 								target="_blank"
 								rel="noopener noreferrer"
-								className="border border-neutral-200 dark:border-neutral-700 p-6 rounded-lg transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+								className="border border-neutral-200 dark:border-neutral-700 z-10 p-6 rounded-lg transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
 								onMouseEnter={() => setIsHovering(true)}
 								onMouseLeave={() => setIsHovering(false)}
 							>
@@ -372,7 +382,7 @@ export default function Home() {
 						</p>
 						<a
 							href="mailto:hello@example.com"
-							className="inline-flex items-center gap-2 border border-neutral-800 bg-neutral-800 text-white px-6 py-3 rounded-full hover:bg-white hover:text-neutral-800 transition-colors duration-300"
+							className="inline-flex items-center gap-2 z-10 border border-neutral-800 bg-neutral-800 text-white px-6 py-3 rounded-full hover:bg-white hover:text-neutral-800 transition-colors duration-300"
 							onMouseEnter={() => setIsHovering(true)}
 							onMouseLeave={() => setIsHovering(false)}
 						>
@@ -394,7 +404,7 @@ export default function Home() {
 							href="https://github.com/ckearl"
 							target="_blank"
 							rel="noopener noreferrer"
-							className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-800 transition-colors duration-300"
+							className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-800 transition-colors duration-300 z-10"
 							onMouseEnter={() => setIsHovering(true)}
 							onMouseLeave={() => setIsHovering(false)}
 						>
@@ -404,7 +414,7 @@ export default function Home() {
 							href="https://www.linkedin.com/in/christopher-kearl/"
 							target="_blank"
 							rel="noopener noreferrer"
-							className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-800 transition-colors duration-300"
+							className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-800 transition-colors duration-300 z-10"
 							onMouseEnter={() => setIsHovering(true)}
 							onMouseLeave={() => setIsHovering(false)}
 						>
@@ -412,7 +422,7 @@ export default function Home() {
 						</a>
 						<a
 							href="mailto:ctrkearl@gmail.com"
-							className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-800 transition-colors duration-300"
+							className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-800 transition-colors duration-300 z-10"
 							onMouseEnter={() => setIsHovering(true)}
 							onMouseLeave={() => setIsHovering(false)}
 						>

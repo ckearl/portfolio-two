@@ -5,6 +5,10 @@ import { Engine, Render, World, Bodies, Body, Runner } from "matter-js";
 
 type Point = { x: number; y: number };
 
+const initialLogos = [...Array(20)].map((_, i) => `${i + 1}`);
+let logoNumbers: string[] = [...initialLogos];
+const loadedImages: Record<string, HTMLImageElement> = {};
+
 export default function BallCanvas() {
 	const backgroundCanvasRef = useRef<HTMLCanvasElement | null>(null); // Matter.js canvas
 	const overlayCanvasRef = useRef<HTMLCanvasElement | null>(null); // Drawing canvas
@@ -12,6 +16,16 @@ export default function BallCanvas() {
 	const [start, setStart] = useState<Point | null>(null);
 	const [currentMouse, setCurrentMouse] = useState<Point | null>(null);
 	const [isDragging, setIsDragging] = useState(false);
+
+	useEffect(() => {
+		initialLogos.forEach((logoId) => {
+			const img = new Image();
+			img.src = `/logo/logo-${logoId}.png`;
+			loadedImages[logoId] = img;
+		});
+	}, []);
+
+    const bodyToLogo = useRef(new Map<Matter.Body, string>());
 
 	useEffect(() => {
 		const canvas = backgroundCanvasRef.current;
@@ -39,8 +53,6 @@ export default function BallCanvas() {
 			restitution: 0.2,
 		});
 
-		World.add(engine.world, floor);
-
 		const leftWall = Bodies.rectangle(-25, height / 2, 50, height, {
 			isStatic: true,
 			restitution: 0.2,
@@ -50,14 +62,67 @@ export default function BallCanvas() {
 			restitution: 0.2,
 		});
 
-		World.add(engine.world, [leftWall, rightWall]);
+		World.add(engine.world, [floor, leftWall, rightWall]);
 
 		const runner = Runner.create();
-		Render.run(render);
 		Runner.run(runner, engine);
 
+		const ctx = canvas.getContext("2d");
+		const image = new Image();
+
+		if (logoNumbers.length === 0) {
+			logoNumbers = [...Array(20)].map((_, i) => `${i + 1}`);
+		}
+
+		const index = Math.floor(Math.random() * logoNumbers.length);
+		const selectedLogo = logoNumbers[index]; // ✅ store the logo first
+		logoNumbers.splice(index, 1); // ✅ then remove it
+		image.src = `/logo/logo-${selectedLogo}.png`; // ✅ use the stored value
+
+		image.onload = () => {
+			const aspectRatio = image.width / image.height;
+			const baseHeight = 70; // height in px for your ball image
+			const baseWidth = baseHeight * aspectRatio;
+
+			const draw = () => {
+				if (!ctx) return;
+				ctx.clearRect(0, 0, width, height);
+
+				engine.world.bodies.forEach((body) => {
+					if (body.circleRadius) {
+						const logoId = bodyToLogo.current.get(body);
+						const image = logoId ? loadedImages[logoId] : null;
+						if (!image || !image.complete) return;
+
+						const x = body.position.x;
+						const y = body.position.y;
+
+						const aspectRatio = image.width / image.height;
+						const baseHeight = 70;
+						const baseWidth = baseHeight * aspectRatio;
+
+						ctx.save();
+						ctx.translate(x, y);
+						ctx.rotate(body.angle);
+						ctx.drawImage(
+							image,
+							-baseWidth / 2,
+							-baseHeight / 2,
+							baseWidth,
+							baseHeight
+						);
+						ctx.restore();
+					}
+				});
+
+
+				requestAnimationFrame(draw);
+			};
+
+			draw();
+		};
+
 		return () => {
-			Render.stop(render);
 			Runner.stop(runner);
 			World.clear(engine.world, false);
 			Engine.clear(engine);
@@ -98,7 +163,7 @@ export default function BallCanvas() {
 				const g = 0.98 * 120; // gravity approximation in px/s^2
 				let x = start.x;
 				let y = start.y;
-				let vx = velocity.x * 60; // convert to px/frame
+				let vx = velocity.x * 60;
 				let vy = velocity.y * 60;
 
 				ctx.fillStyle = "rgba(0,0,0,0.3)";
@@ -161,15 +226,32 @@ export default function BallCanvas() {
 			y: power * Math.sin(angle),
 		};
 
+		if (logoNumbers.length === 0) {
+			logoNumbers = [...initialLogos];
+		}
+
+		const index = Math.floor(Math.random() * logoNumbers.length);
+		const selectedLogo = logoNumbers[index];
+		logoNumbers.splice(index, 1);
+
 		const ball = Bodies.circle(start.x, start.y, 35, {
 			restitution: 0.6,
 			friction: 0.05,
 			density: 0.01,
+			render: {
+				visible: false,
+			},
 		});
 
 		Body.setVelocity(ball, velocity);
-		ball.render.fillStyle = "#33333380";
+		const spin = dx * 0.0001;
+		Body.setAngularVelocity(ball, spin);
+
+		// 🧠 Track which logo this body should use
+		bodyToLogo.current.set(ball, selectedLogo);
+
 		World.add(engineRef.current.world, ball);
+
 	};
 
 	return (
