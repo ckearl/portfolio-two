@@ -8,6 +8,7 @@ export default function Home() {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 	const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 	const [isHovering, setIsHovering] = useState(false);
+  const [showAllExperiences, setShowAllExperiences] = useState(false);
 
 	const sectionRefs = {
 		about: useRef(null),
@@ -95,7 +96,7 @@ export default function Home() {
 			company: "Marriott International",
 			period: "2024 - Present",
 			description:
-				"Develop interactive glossary of security controls for enterprise cloud platform. Maintain security and compliance protocols for all production cloud service environments.",
+				"Develop interactive glossary of security controls for enterprise cloud platform. Maintain security and compliance protocols for all production cloud service environments. Aided in remediation efforts during the largest international IT outage in company history; personally restored 20 properties and 39 remote servers and devices, ensuring transaction processing for thousands of guests",
 		},
 		{
 			role: "Adjust Professor",
@@ -105,25 +106,32 @@ export default function Home() {
 				"Engineered new curriculum for Introduction to Web Development course in the Information Systems program. Prepared lecture materials, assignments, classroom activities, projects, and exams for classroom of 25 students across two different semesters.",
 		},
 		{
+			role: "Full-Stack Software Engineer",
+			company: "KeyCoach",
+			period: "2024 - Present",
+			description:
+				".",
+		},
+		{
 			role: "Data Engineer Intern",
 			company: "Pattern",
 			period: "Summer 2023",
 			description:
-				"Developed datastreams and API endpoints for FE teams to build more features.",
+				"Developed dynamic search keyword filters to categorize keywords by tracking period, resulting in an aggregate average of $0.50 in savings per advertisement space bid for partners while improving internal ROI analysis. Reduced Amazon ad metrics dashboard load times by ~3 seconds by optimizing SQL generation and access controls.",
 		},
 		{
 			role: "Teaching Assistant",
 			company: "BYU Marriott School of Business",
 			period: "2022 - 2023",
 			description:
-				"Managed course curriculum, grading standards, and academic progress for 60+ students in courses.",
+				"Managed course curriculum, grading standards, and academic progress for 60+ students. Aided professor in piloting new course by exploring management tools, learning resources, and teaching methods. Minimized grade entry times by 4 hours by automating submission requests from students.",
 		},
 		{
 			role: "Web Developer",
 			company: "Contour Software",
 			period: "2021 - 2022",
 			description:
-				"Launched paperless work environment transition for client by engineering project information entry application.",
+				"Launched paperless work environment transition for client by engineering AWS-compatible information entry platform. Streamlined client new-hire onboarding experience by building custom HRM application. Presented new features and upcoming requirements in bimonthly demos with client executives.",
 		},
 	];
 
@@ -267,24 +275,36 @@ export default function Home() {
 				>
 					<h2 className="text-3xl md:text-4xl font-light mb-12">Experience</h2>
 					<div className="grid gap-12">
-						{experiences.map((exp, index) => (
-							<div
-								key={index}
-								className="border-t border-neutral-200 pt-8 grid md:grid-cols-4 gap-6"
-								onMouseEnter={() => setIsHovering(true)}
-								onMouseLeave={() => setIsHovering(false)}
-							>
-								<div className="md:col-span-1">
-									<p className="text-neutral-400">{exp.period}</p>
+						{(showAllExperiences ? experiences : experiences.slice(0, 3)).map(
+							(exp, index) => (
+								<div
+									key={index}
+									className="border-t border-neutral-200 pt-8 grid md:grid-cols-4 gap-6"
+									onMouseEnter={() => setIsHovering(true)}
+									onMouseLeave={() => setIsHovering(false)}
+								>
+									<div className="md:col-span-1">
+										<p className="text-neutral-400">{exp.period}</p>
+									</div>
+									<div className="md:col-span-3">
+										<h3 className="text-xl font-medium mb-2">{exp.role}</h3>
+										<p className="text-neutral-600 mb-4">{exp.company}</p>
+										<p className="text-neutral-600">{exp.description}</p>
+									</div>
 								</div>
-								<div className="md:col-span-3">
-									<h3 className="text-xl font-medium mb-2">{exp.role}</h3>
-									<p className="text-neutral-600 mb-4">{exp.company}</p>
-									<p className="text-neutral-600">{exp.description}</p>
-								</div>
-							</div>
-						))}
+							)
+						)}
 					</div>
+					{experiences.length > 3 && (
+						<button
+							onClick={() => setShowAllExperiences(!showAllExperiences)}
+							className="mt-8 self-center border border-neutral-200 px-4 py-2 rounded-full hover:bg-neutral-800 hover:text-white transition-colors duration-300"
+							onMouseEnter={() => setIsHovering(true)}
+							onMouseLeave={() => setIsHovering(false)}
+						>
+							{showAllExperiences ? "View Less" : "View More"}
+						</button>
+					)}
 				</section>
 
 				{/* Projects Section */}
