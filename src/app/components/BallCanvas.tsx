@@ -75,13 +75,13 @@ export default function BallCanvas() {
 		}
 
 		const index = Math.floor(Math.random() * logoNumbers.length);
-		const selectedLogo = logoNumbers[index]; // ✅ store the logo first
-		logoNumbers.splice(index, 1); // ✅ then remove it
-		image.src = `/logo/logo-${selectedLogo}.png`; // ✅ use the stored value
+		const selectedLogo = logoNumbers[index];
+		logoNumbers.splice(index, 1);
+		image.src = `/logo/logo-${selectedLogo}.png`;
 
 		image.onload = () => {
 			const aspectRatio = image.width / image.height;
-			const baseHeight = 70; // height in px for your ball image
+			const baseHeight = 70;
 			const baseWidth = baseHeight * aspectRatio;
 
 			const draw = () => {
@@ -281,8 +281,8 @@ export default function BallCanvas() {
 					top: 0,
 					left: 0,
 					zIndex: 2,
-					background: "transparent", // for good measure
-					pointerEvents: "auto", // allow mouse events
+					background: "transparent",
+					pointerEvents: "auto",
 				}}
 			/>
 		</>
