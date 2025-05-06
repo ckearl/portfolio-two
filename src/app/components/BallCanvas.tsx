@@ -1,61 +1,72 @@
-import React, { useRef, useEffect, useState } from "react";
+"use client";
+
+import React, { useEffect, useRef, useState } from "react";
+import { Engine, Render, World, Bodies, Body, Runner } from "matter-js";
 
 type Point = { x: number; y: number };
 
 export default function BallCanvas() {
-	const canvasRef = useRef<HTMLCanvasElement>(null);
+	const backgroundCanvasRef = useRef<HTMLCanvasElement | null>(null); // Matter.js canvas
+	const overlayCanvasRef = useRef<HTMLCanvasElement | null>(null); // Drawing canvas
+	const engineRef = useRef(Engine.create());
 	const [start, setStart] = useState<Point | null>(null);
-	const [launch, setLaunch] = useState<{
-		velocity: Point;
-		position: Point;
-	} | null>(null);
-	const [startTime, setStartTime] = useState<number | null>(null);
-	const [isDragging, setIsDragging] = useState(false);
 	const [currentMouse, setCurrentMouse] = useState<Point | null>(null);
-
-	const gravity = 500; // px/s^2
+	const [isDragging, setIsDragging] = useState(false);
 
 	useEffect(() => {
-		const canvas = canvasRef.current;
+		const canvas = backgroundCanvasRef.current;
+		const engine = engineRef.current;
 		if (!canvas) return;
 
-		const dpr = window.devicePixelRatio || 1;
+		const width = window.innerWidth;
+		const height = window.innerHeight;
+		canvas.width = width;
+		canvas.height = height;
 
-		const resizeCanvas = () => {
-			canvas.width = window.innerWidth * dpr;
-			canvas.height = window.innerHeight * dpr;
-			canvas.style.width = "100vw";
-			canvas.style.height = "100vh";
+		const render = Render.create({
+			canvas,
+			engine,
+			options: {
+				width,
+				height,
+				background: "transparent",
+				wireframes: false,
+			},
+		});
 
-			const ctx = canvas.getContext("2d");
-			if (ctx) ctx.scale(dpr, dpr);
+		const floor = Bodies.rectangle(width / 2, height + 25, width, 50, {
+			isStatic: true,
+			restitution: 0.2,
+		});
+		World.add(engine.world, floor);
+
+		const runner = Runner.create();
+		Render.run(render);
+		Runner.run(runner, engine);
+
+		return () => {
+			Render.stop(render);
+			Runner.stop(runner);
+			World.clear(engine.world, false);
+			Engine.clear(engine);
 		};
+	}, []);
 
-		resizeCanvas();
-		window.addEventListener("resize", resizeCanvas);
-
+	useEffect(() => {
+		const canvas = overlayCanvasRef.current;
+		if (!canvas) return;
 		const ctx = canvas.getContext("2d");
 		if (!ctx) return;
 
-		let animationFrame: number;
+		const width = window.innerWidth;
+		const height = window.innerHeight;
+		canvas.width = width;
+		canvas.height = height;
 
-		const draw = (timestamp: number) => {
-			ctx.clearRect(0, 0, canvas.width, canvas.height);
+		let raf: number;
 
-			if (launch && startTime !== null) {
-				const t = (timestamp - startTime) / 1000;
-				const { velocity, position } = launch;
-
-				const x = position.x + velocity.x * t;
-				const y = position.y + velocity.y * t + 0.5 * gravity * t * t;
-
-				if (y < canvas.height) {
-					ctx.beginPath();
-					ctx.arc(x, y, 10, 0, Math.PI * 2);
-					ctx.fill();
-				}
-			}
-
+		const draw = () => {
+			ctx.clearRect(0, 0, width, height);
 			if (isDragging && start && currentMouse) {
 				ctx.beginPath();
 				ctx.moveTo(start.x, start.y);
@@ -64,68 +75,88 @@ export default function BallCanvas() {
 				ctx.lineWidth = 2;
 				ctx.stroke();
 			}
-
-			animationFrame = requestAnimationFrame(draw);
+			raf = requestAnimationFrame(draw);
 		};
 
-		animationFrame = requestAnimationFrame(draw);
+		draw();
+		return () => cancelAnimationFrame(raf);
+	}, [isDragging, start, currentMouse]);
 
-		return () => {
-			window.removeEventListener("resize", resizeCanvas);
-			cancelAnimationFrame(animationFrame);
-		};
-	}, [launch, startTime]);
-
-	const handleMouseDown = (e: React.MouseEvent) => {
-		const rect = canvasRef.current?.getBoundingClientRect();
+	const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
+		const rect = overlayCanvasRef.current?.getBoundingClientRect();
 		if (!rect) return;
-		const startPoint = { x: e.clientX - rect.left, y: e.clientY - rect.top };
-		setStart(startPoint);
-		setCurrentMouse(startPoint);
+		const x = e.clientX - rect.left;
+		const y = e.clientY - rect.top;
+		setStart({ x, y });
+		setCurrentMouse({ x, y });
 		setIsDragging(true);
 	};
 
-	const handleMouseMove = (e: React.MouseEvent) => {
+	const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
 		if (!isDragging) return;
-		const rect = canvasRef.current?.getBoundingClientRect();
+		const rect = overlayCanvasRef.current?.getBoundingClientRect();
 		if (!rect) return;
-		setCurrentMouse({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+		const x = e.clientX - rect.left;
+		const y = e.clientY - rect.top;
+		setCurrentMouse({ x, y });
 	};
 
-	const handleMouseUp = (e: React.MouseEvent) => {
+	const handleMouseUp = (e: React.MouseEvent<HTMLCanvasElement>) => {
 		setIsDragging(false);
-		const rect = canvasRef.current?.getBoundingClientRect();
+		const rect = overlayCanvasRef.current?.getBoundingClientRect();
 		if (!rect || !start) return;
 		const end = { x: e.clientX - rect.left, y: e.clientY - rect.top };
 
 		const dx = start.x - end.x;
 		const dy = start.y - end.y;
-		const power = Math.sqrt(dx * dx + dy * dy) * 4;
+		const power = Math.sqrt(dx * dx + dy * dy) * 0.05;
 		const angle = Math.atan2(dy, dx);
 
-		const v0x = power * Math.cos(angle);
-		const v0y = power * Math.sin(angle);
+		const velocity = {
+			x: power * Math.cos(angle),
+			y: power * Math.sin(angle),
+		};
 
-		setLaunch({
-			velocity: { x: v0x, y: v0y },
-			position: { x: start.x, y: start.y },
+		const ball = Bodies.circle(start.x, start.y, 10, {
+			restitution: 0.6,
+			friction: 0.05,
+			density: 0.01,
 		});
-		setStartTime(performance.now());
+		Body.setVelocity(ball, velocity);
+		World.add(engineRef.current.world, ball);
 	};
 
 	return (
-		<canvas
-			ref={canvasRef}
-			style={{
-				width: "100vw",
-				height: "100vh",
-				position: "fixed",
-				top: 0,
-				left: 0,
-			}}
-			onMouseDown={handleMouseDown}
-			onMouseMove={handleMouseMove}
-			onMouseUp={handleMouseUp}
-		/>
+		<>
+			<canvas
+				ref={backgroundCanvasRef}
+				style={{
+					width: "100vw",
+					height: "100vh",
+					position: "fixed",
+					top: 0,
+					left: 0,
+					zIndex: 1,
+					background: "transparent",
+				}}
+			/>
+
+			<canvas
+				ref={overlayCanvasRef}
+				onMouseDown={handleMouseDown}
+				onMouseMove={handleMouseMove}
+				onMouseUp={handleMouseUp}
+				style={{
+					width: "100vw",
+					height: "100vh",
+					position: "fixed",
+					top: 0,
+					left: 0,
+					zIndex: 2,
+					background: "transparent", // for good measure
+					pointerEvents: "auto", // allow mouse events
+				}}
+			/>
+		</>
 	);
 }
