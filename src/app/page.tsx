@@ -2,6 +2,11 @@
 
 import { useState, useEffect, useRef, SetStateAction } from "react";
 import { Github, Mail, FileText, Linkedin, Menu, X } from "lucide-react";
+import dynamic from "next/dynamic";
+
+const BallCanvas = dynamic(() => import("./components/BallCanvas"), {
+	ssr: false,
+});
 
 export default function Home() {
 	const [activeSection, setActiveSection] = useState("about");
@@ -137,6 +142,9 @@ export default function Home() {
 
 	return (
 		<div className="bg-white dark:bg-neutral-900 text-neutral-800 dark:text-neutral-100 min-h-screen relative overflow-x-hidden font-light">
+			{/* ball canvas game */}
+			<BallCanvas />
+
 			{/* Custom cursor */}
 			<div
 				className={`fixed w-8 h-8 rounded-full border border-neutral-800 dark:border-neutral-100 pointer-events-none z-50 mix-blend-difference transition-transform duration-300 ${
@@ -359,7 +367,8 @@ export default function Home() {
 					<h2 className="text-3xl md:text-4xl font-light mb-8">Contact</h2>
 					<div className="max-w-xl">
 						<p className="text-lg text-neutral-600 dark:text-neutral-400 mb-8">
-							It's nice to meet you! Reach out to connect or collaborate on a project.
+							It's nice to meet you! Reach out to connect or collaborate on a
+							project.
 						</p>
 						<a
 							href="mailto:hello@example.com"
