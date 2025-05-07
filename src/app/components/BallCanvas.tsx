@@ -25,7 +25,7 @@ export default function BallCanvas() {
 		});
 	}, []);
 
-    const bodyToLogo = useRef(new Map<Matter.Body, string>());
+	const bodyToLogo = useRef(new Map<Matter.Body, string>());
 
 	useEffect(() => {
 		const canvas = backgroundCanvasRef.current;
@@ -115,7 +115,6 @@ export default function BallCanvas() {
 					}
 				});
 
-
 				requestAnimationFrame(draw);
 			};
 
@@ -191,33 +190,48 @@ export default function BallCanvas() {
 		return () => cancelAnimationFrame(raf);
 	}, [isDragging, start, currentMouse]);
 
-	const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
+	const getEventPosition = (
+		e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
+	): Point | null => {
 		const rect = overlayCanvasRef.current?.getBoundingClientRect();
-		if (!rect) return;
-		const x = e.clientX - rect.left;
-		const y = e.clientY - rect.top;
-		setStart({ x, y });
-		setCurrentMouse({ x, y });
+		if (!rect) return null;
+
+		if ("touches" in e) {
+			const touch = e.touches[0];
+			return { x: touch.clientX - rect.left, y: touch.clientY - rect.top };
+		} else {
+			return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+		}
+	};
+
+	const handleDown = (
+		e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
+	) => {
+		const pos = getEventPosition(e);
+		if (!pos) return;
+		setStart(pos);
+		setCurrentMouse(pos);
 		setIsDragging(true);
 	};
 
-	const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
+	const handleMove = (
+		e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
+	) => {
 		if (!isDragging) return;
-		const rect = overlayCanvasRef.current?.getBoundingClientRect();
-		if (!rect) return;
-		const x = e.clientX - rect.left;
-		const y = e.clientY - rect.top;
-		setCurrentMouse({ x, y });
+		const pos = getEventPosition(e);
+		if (!pos) return;
+		setCurrentMouse(pos);
 	};
 
-	const handleMouseUp = (e: React.MouseEvent<HTMLCanvasElement>) => {
+	const handleUp = (
+		e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
+	) => {
 		setIsDragging(false);
-		const rect = overlayCanvasRef.current?.getBoundingClientRect();
-		if (!rect || !start) return;
-		const end = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+		const pos = getEventPosition(e);
+		if (!start || !pos) return;
 
-		const dx = start.x - end.x;
-		const dy = start.y - end.y;
+		const dx = start.x - pos.x;
+		const dy = start.y - pos.y;
 		const power = Math.sqrt(dx * dx + dy * dy) * 0.05;
 		const angle = Math.atan2(dy, dx);
 
@@ -229,7 +243,6 @@ export default function BallCanvas() {
 		if (logoNumbers.length === 0) {
 			logoNumbers = [...initialLogos];
 		}
-
 		const index = Math.floor(Math.random() * logoNumbers.length);
 		const selectedLogo = logoNumbers[index];
 		logoNumbers.splice(index, 1);
@@ -238,20 +251,14 @@ export default function BallCanvas() {
 			restitution: 0.6,
 			friction: 0.05,
 			density: 0.01,
-			render: {
-				visible: false,
-			},
+			render: { visible: false },
 		});
 
 		Body.setVelocity(ball, velocity);
-		const spin = dx * 0.0001;
+		const spin = 0.0001;
 		Body.setAngularVelocity(ball, spin);
-
-		// 🧠 Track which logo this body should use
 		bodyToLogo.current.set(ball, selectedLogo);
-
 		World.add(engineRef.current.world, ball);
-
 	};
 
 	return (
@@ -271,9 +278,12 @@ export default function BallCanvas() {
 
 			<canvas
 				ref={overlayCanvasRef}
-				onMouseDown={handleMouseDown}
-				onMouseMove={handleMouseMove}
-				onMouseUp={handleMouseUp}
+				onMouseDown={handleDown}
+				onMouseMove={handleMove}
+				onMouseUp={handleUp}
+				onTouchStart={handleDown}
+				onTouchMove={handleMove}
+				onTouchEnd={handleUp}
 				style={{
 					width: "100vw",
 					height: "100vh",
@@ -283,6 +293,7 @@ export default function BallCanvas() {
 					zIndex: 2,
 					background: "transparent",
 					pointerEvents: "auto",
+					touchAction: "none",
 				}}
 			/>
 		</>
