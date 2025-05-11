@@ -8,14 +8,14 @@ const BallCanvas = dynamic(() => import("./components/BallCanvas"), {
 	ssr: false,
 });
 
-
 export default function Home() {
-  const [activeSection, setActiveSection] = useState("about");
+	const [activeSection, setActiveSection] = useState("about");
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 	const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 	const [isHovering, setIsHovering] = useState(false);
-  const [showAllExperiences, setShowAllExperiences] = useState(false);
-  
+	const [showAllExperiences, setShowAllExperiences] = useState(false);
+	const [toggleBallCanvas, setToggleBallCanvas] = useState(false);
+
 	const sectionRefs: {
 		about: React.RefObject<HTMLElement | null>;
 		experience: React.RefObject<HTMLElement | null>;
@@ -28,13 +28,11 @@ export default function Home() {
 		contact: useRef<HTMLElement | null>(null),
 	};
 
-
-  
-  type SectionId = keyof typeof sectionRefs;
+	type SectionId = keyof typeof sectionRefs;
 
 	// Custom cursor effect
 	useEffect(() => {
-		const handleMouseMove = (e: { clientX: any; clientY: any; }) => {
+		const handleMouseMove = (e: { clientX: any; clientY: any }) => {
 			setCursorPosition({ x: e.clientX, y: e.clientY });
 		};
 
@@ -70,7 +68,7 @@ export default function Home() {
 
 	// Scroll to section function
 	const scrollToSection = (sectionId: SectionId) => {
-    sectionRefs[sectionId].current?.scrollIntoView({ behavior: "smooth" });
+		sectionRefs[sectionId].current?.scrollIntoView({ behavior: "smooth" });
 		setActiveSection(sectionId);
 		setMobileMenuOpen(false);
 	};
@@ -124,8 +122,7 @@ export default function Home() {
 			role: "Full-Stack Software Engineer",
 			company: "KeyCoach",
 			period: "2024 - Present",
-			description:
-				".",
+			description: ".",
 		},
 		{
 			role: "Data Engineer Intern",
@@ -153,7 +150,7 @@ export default function Home() {
 	return (
 		<div className="bg-white dark:bg-neutral-900 text-neutral-800 dark:text-neutral-100 min-h-screen relative overflow-x-hidden font-light">
 			{/* ball canvas game */}
-			<BallCanvas />
+			{toggleBallCanvas && <BallCanvas />}
 
 			{/* Custom cursor */}
 			<div
@@ -283,6 +280,25 @@ export default function Home() {
 							</a>
 						</div>
 					</div>
+				</section>
+
+				{/* Toggle Ball Canvas*/}
+				<section
+					id="ball-canvas"
+					className="min-h-24 flex flex-col justify-center items-center"
+					ref={sectionRefs.experience}
+				>
+					<button
+						onClick={() => setToggleBallCanvas(!toggleBallCanvas)}
+						className="mt-8 border border-neutral-200 dark:border-neutral-700 px-4 py-2 rounded-full hover:bg-neutral-800 hover:text-white transition-colors duration-300 z-10"
+						onMouseEnter={() => setIsHovering(true)}
+						onMouseLeave={() => setIsHovering(false)}
+					>
+						{toggleBallCanvas ? "Hide Skills" : "Show Skills"}
+					</button>
+					<p className="text-lg text-neutral-600 dark:text-neutral-400 mt-4">
+						Click and drag to see my skills!
+					</p>
 				</section>
 
 				{/* Experience Section */}
