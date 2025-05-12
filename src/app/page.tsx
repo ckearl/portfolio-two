@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, SetStateAction } from "react";
 import { Github, Mail, FileText, Linkedin, Menu, X } from "lucide-react";
 import dynamic from "next/dynamic";
+import CodeBlock from "./components/CodeBlock";
 
 const BallCanvas = dynamic(() => import("./components/BallCanvas"), {
 	ssr: false,
@@ -242,10 +243,8 @@ export default function Home() {
 								Full Stack Developer.
 							</span>
 						</h1>
-						<p className="text-lg md:text-xl text-neutral-600 dark:text-neutral-500 mb-12 leading-relaxed">
-							I build thoughtful, accessible, and engaging web experiences that
-							bridge the gap between user needs and business goals.
-						</p>
+						<CodeBlock />
+
 						<div className="flex flex-wrap gap-4">
 							<a
 								href="https://github.com/ckearl"
