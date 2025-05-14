@@ -24,3 +24,33 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@keyframes diagonal-collapse {
+  0% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0) rotate(5deg);
+    opacity: 0;
+  }
+}
+
+@keyframes diagonal-expand {
+  0% {
+    transform: scale(0) rotate(-5deg);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.animate-diagonal-collapse {
+  animation: diagonal-collapse 400ms ease-in-out forwards;
+}
+
+.animate-diagonal-expand {
+  animation: diagonal-expand 400ms ease-in-out forwards;
+}

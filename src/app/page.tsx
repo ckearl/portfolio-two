@@ -234,16 +234,23 @@ export default function Home() {
 				<section
 					id="about"
 					ref={sectionRefs.about}
-					className="min-h-screen flex flex-col justify-center"
+					className="min-h-screen flex flex-col align-start justify-start space-around"
 				>
-					<div className="max-w-3xl">
-						<h1 className="text-5xl md:text-7xl font-light mb-8 leading-tight">
-							<span className="block">Hello, I'm Christopher.</span>
-							<span className="block text-neutral-400">
-								Full Stack Developer.
-							</span>
-						</h1>
-						<CodeBlock />
+					<div className="min-w-3/4">
+						{/* <h1 className="text-5xl md:text-7xl font-light mb-8 leading-tight">
+								<span className="block">Hello, I'm Christopher.</span>
+								<span className="block text-neutral-400">
+									Full Stack Developer.
+								</span>
+							</h1> */}
+						<div className="flex flex-row flex-wrap justify-around align-middle">
+							<CodeBlock />
+							<img
+								src="/memoji_hi_res.png"
+								alt="Memoji"
+								className="w-1/2 h-auto mx-auto mt-8"
+							/>
+						</div>
 
 						<div className="flex flex-wrap gap-4">
 							<a
