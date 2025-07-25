@@ -75,9 +75,8 @@ type Lang = keyof typeof CODE_SNIPPETS;
 
 export default function CodeBlock() {
 	const [html, setHtml] = useState<string>("");
-	const [language, setLanguage] = useState<Lang>("json");
-	const [highlighter, setHighlighter] = useState<any>(null);
-	const [firstLoad, setFirstLoad] = useState(true);
+	const [language] = useState<Lang>("json");
+	const [fullHtml, setFullHtml] = useState<string>("");
 
 	useEffect(() => {
 		const detectTheme = window.matchMedia("(prefers-color-scheme: dark)")
@@ -90,7 +89,13 @@ export default function CodeBlock() {
 				themes: ["nord", "github-light"],
 				langs: ["json", "yaml", "xml"],
 			});
-			setHighlighter(instance);
+
+			// Precompute the full code block for placeholder
+			const full = instance.codeToHtml(CODE_SNIPPETS[language], {
+				lang: language,
+				theme: detectTheme,
+			});
+			setFullHtml(full);
 
 			// Run typewriter on JSON load only
 			if (language === "json") {
@@ -103,7 +108,6 @@ export default function CodeBlock() {
 					setHtml(html);
 					await new Promise((r) => setTimeout(r, 3));
 				}
-				setFirstLoad(false);
 			} else {
 				const html = instance.codeToHtml(CODE_SNIPPETS[language], {
 					lang: language,
@@ -117,7 +121,7 @@ export default function CodeBlock() {
 	}, [language]);
 
 	return (
-		<div className="relative mb-8 max-w-1/2">
+		<div className="relative mb-8 max-w-[48rem] min-w-[24rem]">
 			<style>
 				{`
         .shiki code, .shiki pre {
@@ -128,8 +132,15 @@ export default function CodeBlock() {
       `}
 			</style>
 
+			{/* Invisible placeholder for max width */}
 			<div
-				className="prose prose-sm dark:prose-invert rounded-lg overflow-x-auto bg-[#2E3440] dark:bg-[#2E3440] p-4"
+				className="prose prose-sm dark:prose-invert rounded-lg overflow-x-auto bg-[#2E3440] dark:bg-[#2E3440] p-4 opacity-0 select-none pointer-events-none absolute inset-0 z-0"
+				dangerouslySetInnerHTML={{ __html: fullHtml }}
+			/>
+
+			{/* Typing animation overlay */}
+			<div
+				className="prose prose-sm dark:prose-invert rounded-lg overflow-x-auto bg-[#2E3440] dark:bg-[#2E3440] p-4 relative z-10"
 				dangerouslySetInnerHTML={{ __html: html }}
 			/>
 		</div>
