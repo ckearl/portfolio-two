@@ -59,11 +59,16 @@ export default function About() {
               {personalInfo.bio}
             </p>
 
-            {/* Education Block */}
-            <div className="border-l-4 border-neon-green pl-6 py-4 bg-navy-900/50">
+            {/* Education Block - Hero card style */}
+            <div className="relative border-2 border-neon-green/30 bg-gradient-to-br from-neon-green/10 to-transparent backdrop-blur-sm p-6">
               <div className="flex items-start gap-4">
-                <Code2 className="text-neon-green mt-1 flex-shrink-0" size={24} />
+                <div className="p-3 bg-neon-green/10">
+                  <Code2 className="text-neon-green flex-shrink-0" size={24} />
+                </div>
                 <div>
+                  <p className="text-neon-green font-mono text-xs uppercase tracking-wider mb-2">
+                    // EDUCATION
+                  </p>
                   <h3 className="text-xl font-bold text-slate-50 mb-2">
                     {education.degree}
                   </h3>

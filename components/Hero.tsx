@@ -115,7 +115,7 @@ export default function Hero() {
                   transition={{ delay: 0.2, duration: 0.6 }}
                 >
                   <span className="text-slate-50 block">CHRISTOPHER</span>
-                  <span className="text-transparent bg-gradient-to-r from-neon-cyan via-neon-green to-neon-cyan bg-clip-text block">
+                  <span className="text-neon-cyan block">
                     KEARL
                   </span>
                 </motion.div>

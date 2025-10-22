@@ -49,20 +49,41 @@ function CategorySkills({
   skillList,
   scrollProgress,
   cardOffset,
-  totalCards
+  totalCards,
+  categoryIndex
 }: {
   category: string;
   skillList: string[];
   scrollProgress: any;
   cardOffset: number;
   totalCards: number;
+  categoryIndex: number;
 }) {
+  // Animate category title based on first card in category
+  const titleStartProgress = 0.15 + (cardOffset / totalCards) * 0.5;
+  const titleEndProgress = 0.15 + ((cardOffset + 2) / totalCards) * 0.5;
+
+  const titleY = useTransform(
+    scrollProgress,
+    [titleStartProgress, titleEndProgress],
+    [30, 0]
+  );
+
+  const titleOpacity = useTransform(
+    scrollProgress,
+    [titleStartProgress, titleEndProgress],
+    [0, 1]
+  );
+
   return (
     <div>
-      <h3 className="text-2xl md:text-3xl font-black text-slate-50 uppercase mb-6 flex items-center gap-4">
+      <motion.h3
+        style={{ y: titleY, opacity: titleOpacity }}
+        className="text-2xl md:text-3xl font-black text-slate-50 uppercase mb-6 flex items-center gap-4"
+      >
         <span className="text-neon-cyan">///</span>
         {category}
-      </h3>
+      </motion.h3>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
         {skillList.map((skill, idx) => {
@@ -134,6 +155,7 @@ export default function Skills() {
                 scrollProgress={scrollYProgress}
                 cardOffset={cardOffset}
                 totalCards={totalCards}
+                categoryIndex={catIdx}
               />
             );
           })}
