@@ -1,13 +1,101 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { Award } from "lucide-react";
 import { skills, certifications } from "@/data/resume";
 
+function SkillCard({
+  skill,
+  scrollProgress,
+  startProgress,
+  endProgress
+}: {
+  skill: string;
+  scrollProgress: any;
+  startProgress: number;
+  endProgress: number;
+}) {
+  const cardX = useTransform(
+    scrollProgress,
+    [startProgress, endProgress],
+    [300, 0]
+  );
+
+  const cardOpacity = useTransform(
+    scrollProgress,
+    [startProgress, endProgress],
+    [0, 1]
+  );
+
+  return (
+    <motion.div
+      style={{ x: cardX, opacity: cardOpacity }}
+      className="relative border-2 border-slate-400/30 bg-navy-950 p-4 text-center group cursor-default overflow-hidden"
+    >
+      <div
+        className="absolute inset-0 bg-slate-50 scale-0 group-hover:scale-150 transition-transform duration-500 ease-out"
+        style={{ transformOrigin: "0% 100%" }}
+      />
+      <span className="relative z-10 text-slate-300 group-hover:text-dark font-semibold text-sm transition-colors duration-300">
+        {skill}
+      </span>
+    </motion.div>
+  );
+}
+
+function CategorySkills({
+  category,
+  skillList,
+  scrollProgress,
+  cardOffset,
+  totalCards
+}: {
+  category: string;
+  skillList: string[];
+  scrollProgress: any;
+  cardOffset: number;
+  totalCards: number;
+}) {
+  return (
+    <div>
+      <h3 className="text-2xl md:text-3xl font-black text-slate-50 uppercase mb-6 flex items-center gap-4">
+        <span className="text-neon-cyan">///</span>
+        {category}
+      </h3>
+
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+        {skillList.map((skill, idx) => {
+          const cardIndex = cardOffset + idx;
+          const startProgress = 0.2 + (cardIndex / totalCards) * 0.5;
+          const endProgress = 0.2 + ((cardIndex + 1) / totalCards) * 0.5;
+
+          return (
+            <SkillCard
+              key={skill}
+              skill={skill}
+              scrollProgress={scrollProgress}
+              startProgress={startProgress}
+              endProgress={endProgress}
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 export default function Skills() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-300px" });
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"]
+  });
+
+  const categories = Object.entries(skills.categories);
+
+  // Calculate total cards across all categories
+  const totalCards = categories.reduce((sum, [_, list]) => sum + list.length, 0);
 
   return (
     <section
@@ -15,16 +103,10 @@ export default function Skills() {
       ref={ref}
       className="py-32 bg-dark relative overflow-hidden"
     >
-      {/* Geometric background */}
       <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-neon-green/5 blur-3xl" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          className="mb-16"
-        >
+        <div className="mb-16">
           <div className="flex items-center gap-4 mb-6">
             <div className="w-16 h-1 bg-neon-cyan" />
             <span className="text-neon-cyan font-mono text-sm uppercase tracking-widest">
@@ -34,62 +116,37 @@ export default function Skills() {
           <h2 className="text-6xl md:text-7xl lg:text-8xl font-black text-slate-50 tracking-tighter">
             SKILLS
           </h2>
-        </motion.div>
-
-        {/* Skills by Category */}
-        <div className="space-y-12">
-          {Object.entries(skills.categories).map(([category, skillList], catIdx) => (
-            <motion.div
-              key={category}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ delay: catIdx * 0.1 }}
-            >
-              {/* Category Title */}
-              <h3 className="text-2xl md:text-3xl font-black text-slate-50 uppercase mb-6 flex items-center gap-4">
-                <span className="text-neon-cyan">///</span>
-                {category}
-              </h3>
-
-              {/* Skills Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-                {skillList.map((skill, idx) => (
-                  <motion.div
-                    key={skill}
-                    initial={{ opacity: 0, x: 100 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 100 }}
-                    transition={{
-                      delay: catIdx * 0.1 + idx * 0.05,
-                      duration: 0.5,
-                      ease: "easeOut"
-                    }}
-                    className="relative border-2 border-slate-400/30 bg-navy-950 p-4 text-center group cursor-default overflow-hidden"
-                  >
-                    <div className="absolute inset-0 bg-slate-50 origin-bottom-left scale-0 group-hover:scale-150 transition-transform duration-500 ease-out" style={{ transformOrigin: "0% 100%" }} />
-                    <span className="relative z-10 text-slate-300 group-hover:text-dark font-semibold text-sm transition-colors duration-300">
-                      {skill}
-                    </span>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          ))}
         </div>
 
-        {/* Certifications */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ delay: 0.6 }}
-          className="mt-20"
-        >
+        <div className="space-y-12">
+          {categories.map(([category, skillList], catIdx) => {
+            // Calculate the offset (how many cards came before this category)
+            let cardOffset = 0;
+            for (let i = 0; i < catIdx; i++) {
+              cardOffset += categories[i][1].length;
+            }
+
+            return (
+              <CategorySkills
+                key={category}
+                category={category}
+                skillList={skillList}
+                scrollProgress={scrollYProgress}
+                cardOffset={cardOffset}
+                totalCards={totalCards}
+              />
+            );
+          })}
+        </div>
+
+        <div className="mt-20">
           <h3 className="text-2xl md:text-3xl font-black text-slate-50 uppercase mb-6 flex items-center gap-4">
             <span className="text-neon-green">///</span>
             CERTIFICATIONS
           </h3>
 
           <div className="grid md:grid-cols-2 gap-6">
-            {certifications.map((cert, idx) => (
+            {certifications.map((cert) => (
               <div
                 key={cert.name}
                 className="border-2 border-neon-green/30 bg-navy-950 p-6 hover:border-neon-green hover:bg-navy-900 transition-all"
@@ -109,21 +166,15 @@ export default function Skills() {
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
 
-        {/* Proficiency Note */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ delay: 0.8 }}
-          className="mt-12 border-l-4 border-neon-pink pl-6 py-4"
-        >
+        <div className="mt-12 border-l-4 border-neon-pink pl-6 py-4">
           <p className="text-slate-400 font-mono text-sm">
             <span className="text-neon-pink font-bold">NOTE:</span> All skills listed represent
             hands-on production experience and active project work. Constantly learning and
             expanding the toolkit.
           </p>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
