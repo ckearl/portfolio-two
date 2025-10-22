@@ -7,7 +7,7 @@ import { skills, certifications } from "@/data/resume";
 
 export default function Skills() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "-300px" });
 
   return (
     <section
@@ -56,12 +56,17 @@ export default function Skills() {
                 {skillList.map((skill, idx) => (
                   <motion.div
                     key={skill}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-                    transition={{ delay: catIdx * 0.1 + idx * 0.02 }}
-                    className="border-2 border-slate-400/30 bg-navy-950 p-4 text-center hover:border-neon-cyan hover:bg-navy-900 transition-all group"
+                    initial={{ opacity: 0, x: 100 }}
+                    animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 100 }}
+                    transition={{
+                      delay: catIdx * 0.1 + idx * 0.05,
+                      duration: 0.5,
+                      ease: "easeOut"
+                    }}
+                    className="relative border-2 border-slate-400/30 bg-navy-950 p-4 text-center group cursor-default overflow-hidden"
                   >
-                    <span className="text-slate-300 group-hover:text-neon-cyan font-semibold text-sm transition-colors">
+                    <div className="absolute inset-0 bg-slate-50 origin-bottom-left scale-0 group-hover:scale-150 transition-transform duration-500 ease-out" style={{ transformOrigin: "0% 100%" }} />
+                    <span className="relative z-10 text-slate-300 group-hover:text-dark font-semibold text-sm transition-colors duration-300">
                       {skill}
                     </span>
                   </motion.div>

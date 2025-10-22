@@ -7,7 +7,7 @@ import { projects, projectCategories } from "@/data/projects";
 
 export default function Projects() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "-300px" });
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   const filteredProjects =
@@ -64,10 +64,11 @@ export default function Projects() {
           {filteredProjects.map((project, idx) => (
             <motion.div
               key={project.id}
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-              transition={{ delay: idx * 0.1 }}
-              className="group bg-navy-950 border-2 border-slate-400/20 hover:border-neon-cyan overflow-hidden transition-all"
+              initial={{ opacity: 0, y: 80 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 80 }}
+              transition={{ delay: idx * 0.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ y: -8, transition: { duration: 0.3 } }}
+              className="group bg-navy-950 border-2 border-slate-400/20 hover:border-neon-cyan overflow-hidden transition-colors"
             >
               {/* Image Placeholder */}
               <div className="relative aspect-video bg-gradient-to-br from-navy-900 to-dark overflow-hidden">

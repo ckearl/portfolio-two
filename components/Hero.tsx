@@ -102,7 +102,7 @@ export default function Hero() {
                 whileHover={{ borderColor: "rgba(0, 255, 240, 1)", scale: 1.05 }}
               >
                 <span className="text-neon-cyan text-sm font-mono uppercase tracking-wider">
-                  Available for work
+                  Open to collaborate
                 </span>
               </motion.div>
 

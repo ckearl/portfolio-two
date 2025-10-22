@@ -7,7 +7,7 @@ import { experience } from "@/data/resume";
 
 export default function Experience() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "-300px" });
   const [expandedId, setExpandedId] = useState<string | null>(experience[0].id);
 
   return (
@@ -45,10 +45,11 @@ export default function Experience() {
             return (
               <motion.div
                 key={job.id}
-                initial={{ opacity: 0, x: -50 }}
-                animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-                transition={{ delay: idx * 0.1 }}
-                className={`border-2 transition-all ${
+                initial={{ opacity: 0, x: -80 }}
+                animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -80 }}
+                transition={{ delay: idx * 0.15, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={{ x: 8, transition: { duration: 0.3 } }}
+                className={`border-2 transition-colors ${
                   isExpanded
                     ? "border-neon-pink bg-navy-900"
                     : "border-slate-400/20 bg-dark hover:border-neon-pink/50"

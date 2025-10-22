@@ -7,7 +7,7 @@ import { personalInfo } from "@/data/resume";
 
 export default function Contact() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "-300px" });
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
@@ -60,9 +60,9 @@ export default function Contact() {
         <div className="grid lg:grid-cols-5 gap-12">
           {/* Left - Contact Info */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-            transition={{ delay: 0.2 }}
+            initial={{ opacity: 0, x: -80 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -80 }}
+            transition={{ delay: 0.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="lg:col-span-2 space-y-8"
           >
             {/* Contact Cards */}
@@ -136,19 +136,19 @@ export default function Contact() {
             {/* Availability */}
             <div className="border-l-4 border-neon-green pl-6 py-4 bg-navy-900">
               <p className="text-neon-green font-bold text-sm uppercase tracking-wider mb-2">
-                OPEN TO OPPORTUNITIES
+                WANT TO CONNECT?
               </p>
               <p className="text-slate-300 text-sm leading-relaxed">
-                Currently exploring full-time software engineering roles and exciting collaborations.
+                Always open to collaborating on interesting projects and connecting with fellow developers.
               </p>
             </div>
           </motion.div>
 
           {/* Right - Contact Form */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-            transition={{ delay: 0.4 }}
+            initial={{ opacity: 0, x: 80 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 80 }}
+            transition={{ delay: 0.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="lg:col-span-3"
           >
             <form onSubmit={handleSubmit} className="space-y-6">

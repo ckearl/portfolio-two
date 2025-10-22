@@ -7,12 +7,16 @@ import { personalInfo, education, achievements } from "@/data/resume";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 60 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
+  },
 };
 
 export default function About() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "-300px" });
 
   return (
     <section
@@ -97,8 +101,9 @@ export default function About() {
                   key={idx}
                   initial={{ opacity: 0, x: 50 }}
                   animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-                  transition={{ delay: idx * 0.1 }}
-                  className={`border-2 border-${color} bg-navy-900/30 p-6 hover:bg-navy-900/60 transition-all group`}
+                  transition={{ delay: idx * 0.15, duration: 0.7, ease: "easeOut" }}
+                  whileHover={{ scale: 1.02, y: -5 }}
+                  className={`border-2 border-${color} bg-navy-900/30 p-6 hover:bg-navy-900/60 transition-colors group cursor-default`}
                 >
                   <div className="flex items-start gap-4">
                     <div className={`p-3 bg-${color}/10 group-hover:bg-${color}/20 transition-colors`}>
