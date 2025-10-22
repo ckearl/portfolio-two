@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
+import { useEffect, useState, useRef } from "react";
 import { ArrowRight, Github, Linkedin, Mail } from "lucide-react";
 import { personalInfo } from "@/data/resume";
 
@@ -13,11 +13,138 @@ const typewriterPhrases = [
   "I made music with millions of streams.",
 ];
 
+function NameTransform({
+  scrollY,
+  nameRotate,
+  nameScale,
+  slashOpacity,
+  textProgress
+}: {
+  scrollY: any;
+  nameRotate: any;
+  nameScale: any;
+  slashOpacity: any;
+  textProgress: any;
+}) {
+  const [displayText, setDisplayText] = useState("CHRISTOPHER KEARL");
+  const [isFixed, setIsFixed] = useState(false);
+  const [initialPosition, setInitialPosition] = useState({ top: 0, left: 0 });
+  const [hasCapturedPosition, setHasCapturedPosition] = useState(false);
+  const nameRef = useRef<HTMLDivElement>(null);
+
+  // Capture position when becoming fixed and switch to fixed positioning
+  useEffect(() => {
+    const checkPosition = () => {
+      if (!nameRef.current) return;
+
+      const rect = nameRef.current.getBoundingClientRect();
+      const scrollYValue = window.scrollY;
+
+      // When the element reaches near the top of viewport
+      if (!isFixed && rect.top <= 0) {
+        // Only capture position the first time (or after reset)
+        if (!hasCapturedPosition) {
+          setInitialPosition({
+            top: rect.top,
+            left: rect.left
+          });
+          setHasCapturedPosition(true);
+        }
+        setIsFixed(true);
+      } else if (isFixed && scrollYValue < 50) {
+        // Reset when scrolling back to top - clear captured position so it re-captures fresh next time
+        setIsFixed(false);
+        setHasCapturedPosition(false);
+        setInitialPosition({ top: 0, left: 0 });
+      }
+    };
+
+    const unsubscribe = scrollY.on("change", checkPosition);
+    return unsubscribe;
+  }, [scrollY, isFixed, hasCapturedPosition]);
+
+  // Update text based on scroll
+  useEffect(() => {
+    const unsubscribe = textProgress.on("change", (latest: number) => {
+      if (latest < 0.3) {
+        setDisplayText("CHRISTOPHER KEARL");
+      } else if (latest < 0.6) {
+        setDisplayText("C. KEARL");
+      } else if (latest < 0.8) {
+        setDisplayText("C.K.");
+      } else {
+        setDisplayText("CK");
+      }
+    });
+    return unsubscribe;
+  }, [textProgress]);
+
+  // Create position transforms that move from captured position to bottom-left
+  const targetX = 32; // 32px from left edge
+  const targetY = typeof window !== 'undefined' ? window.innerHeight - 250 : 0; // Higher up to stay in view when rotated
+
+  // Transform from initial position to target position - only applies when scrolling AFTER element becomes fixed
+  // Using scrollY range [100, 1200] to match when the element becomes fixed
+  const posX = useTransform(scrollY, [100, 1200], [initialPosition.left, targetX]);
+  const posY = useTransform(scrollY, [100, 1200], [initialPosition.top, targetY]);
+
+  return (
+    <>
+      {/* Invisible placeholder to maintain spacing when name is fixed */}
+      {isFixed && (
+        <div className="invisible pointer-events-none" aria-hidden="true">
+          CHRISTOPHER KEARL
+        </div>
+      )}
+
+      {/* The actual transforming name */}
+      <motion.div
+        ref={nameRef}
+        style={{
+          rotate: nameRotate,
+          scale: nameScale,
+          ...(isFixed ? {
+            left: posX,
+            top: posY,
+          } : {})
+        }}
+        className={`${
+          isFixed
+            ? "fixed z-50"
+            : "relative"
+        } text-neon-cyan font-black tracking-tighter origin-bottom-left transition-none`}
+      >
+        <div className="flex items-center gap-3">
+          <motion.div
+            style={{ opacity: slashOpacity }}
+            className="w-8 h-[2px] bg-neon-cyan"
+          />
+          <span className="whitespace-nowrap">
+            {displayText}
+          </span>
+        </div>
+      </motion.div>
+    </>
+  );
+}
+
 export default function Hero() {
   const [currentPhrase, setCurrentPhrase] = useState(0);
   const [currentText, setCurrentText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+
+  // Scroll animations for name transformation
+  const { scrollY } = useScroll();
+
+  // Transform completes when About header is in middle of screen (roughly 1200px)
+  // All transforms start at 100px (when element becomes fixed) and complete at 1200px
+  const nameRotate = useTransform(scrollY, [100, 1200], [0, 90]);
+  const nameScale = useTransform(scrollY, [100, 1200], [1, 0.25]);
+  const slashOpacity = useTransform(scrollY, [600, 1200], [0, 1]);
+
+  // Text transition progress
+  const textProgress = useTransform(scrollY, [100, 1200], [0, 1]);
 
   useEffect(() => {
     const phrase = typewriterPhrases[currentPhrase];
@@ -106,18 +233,21 @@ export default function Hero() {
                 </span>
               </motion.div>
 
-              {/* Name - HUGE and bold */}
-              <h1 className="mb-6">
+              {/* Name - HUGE and bold - transforms on scroll */}
+              <h1 className="mb-6 relative">
                 <motion.div
                   className="text-[clamp(3rem,10vw,7rem)] font-black leading-[0.9] tracking-tighter"
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, duration: 0.6 }}
                 >
-                  <span className="text-slate-50 block">CHRISTOPHER</span>
-                  <span className="text-neon-cyan block">
-                    KEARL
-                  </span>
+                  <NameTransform
+                    scrollY={scrollY}
+                    nameRotate={nameRotate}
+                    nameScale={nameScale}
+                    slashOpacity={slashOpacity}
+                    textProgress={textProgress}
+                  />
                 </motion.div>
               </h1>
 

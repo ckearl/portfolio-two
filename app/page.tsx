@@ -6,13 +6,11 @@ import Projects from "@/components/Projects";
 import Skills from "@/components/Skills";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import VerticalNameStamp from "@/components/VerticalNameStamp";
 
 export default function Home() {
   return (
     <main className="min-h-screen">
       <Navigation />
-      <VerticalNameStamp />
       <Hero />
       <About />
       <Experience />
