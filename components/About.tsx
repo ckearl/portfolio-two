@@ -138,7 +138,7 @@ export default function About() {
             { label: "YEARS CODING", value: "5+" },
             { label: "PROJECTS BUILT", value: "20+" },
             { label: "TECH STACKS", value: "15+" },
-            { label: "COFFEE CONSUMED", value: "∞" },
+            { label: "AMAZING PEOPLE MET", value: "∞" },
           ].map((stat, idx) => (
             <div
               key={idx}

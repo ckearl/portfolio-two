@@ -270,7 +270,7 @@ export default function Hero() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6, duration: 0.6 }}
-                className="mb-12 min-h-[60px]"
+                className="mb-4 min-h-[60px]"
               >
                 <p className="text-lg md:text-xl text-neon-cyan font-mono">
                   <span className="text-slate-500">&gt;</span> {currentText}
@@ -283,7 +283,7 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8, duration: 0.6 }}
-                className="flex flex-wrap gap-4"
+                className="flex flex-wrap gap-4 mb-4"
               >
                 <motion.a
                   href="#projects"
@@ -365,7 +365,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1, duration: 0.6 }}
-          className="absolute bottom-12 left-6 right-6 lg:left-8 lg:right-8"
+          className="bottom-12 left-6 right-6 lg:left-8 lg:right-8"
         >
           <div className="flex justify-between items-center border-t border-slate-400/20 pt-6">
             <div className="flex gap-6">
