@@ -233,14 +233,19 @@ export default function Hero() {
                 </span>
               </motion.div>
 
-              {/* Name - HUGE and bold - transforms on scroll */}
+              {/* Name - HUGE and bold - static with fade-in */}
               <h1 className="mb-6 relative">
                 <motion.div
-                  className="text-[clamp(3rem,10vw,7rem)] font-black leading-[0.9] tracking-tighter"
+                  className="text-[clamp(3rem,10vw,7rem)] font-black leading-[0.9] tracking-tighter text-neon-cyan"
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, duration: 0.6 }}
                 >
+                  <div className="flex flex-col">
+                    <span>CHRISTOPHER</span>
+                    <span>KEARL</span>
+                  </div>
+                  {/* Commented out scroll-based animation:
                   <NameTransform
                     scrollY={scrollY}
                     nameRotate={nameRotate}
@@ -248,6 +253,7 @@ export default function Hero() {
                     slashOpacity={slashOpacity}
                     textProgress={textProgress}
                   />
+                  */}
                 </motion.div>
               </h1>
 
