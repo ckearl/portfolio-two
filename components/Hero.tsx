@@ -112,12 +112,12 @@ function NameTransform({
           isFixed
             ? "fixed z-50"
             : "relative"
-        } text-neon-cyan font-black tracking-tighter origin-bottom-left transition-none`}
+        } text-electric font-black tracking-tighter origin-bottom-left transition-none`}
       >
         <div className="flex items-center gap-3">
           <motion.div
             style={{ opacity: slashOpacity }}
-            className="w-8 h-[2px] bg-neon-cyan"
+            className="w-8 h-[2px] bg-electric"
           />
           <span className="whitespace-nowrap">
             {displayText}
@@ -189,21 +189,21 @@ export default function Hero() {
     >
       {/* Large geometric shapes */}
       <motion.div
-        className="absolute top-0 right-0 w-[800px] h-[800px] bg-neon-cyan/10 rotate-45"
+        className="absolute top-0 right-0 w-[800px] h-[800px] bg-electric/10 rotate-45"
         initial={{ x: 300, y: -300, rotate: 45 }}
         animate={{ x: 200, y: -200, rotate: 50 }}
         transition={{ duration: 20, repeat: Infinity, repeatType: "reverse" }}
       />
 
       <motion.div
-        className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-neon-pink/5"
+        className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-navy-700/5"
         initial={{ x: -200, y: 200 }}
         animate={{ x: -100, y: 100 }}
         transition={{ duration: 15, repeat: Infinity, repeatType: "reverse" }}
       />
 
       <motion.div
-        className="absolute top-1/2 left-1/4 w-[300px] h-[300px] bg-neon-green/5 rounded-full blur-3xl"
+        className="absolute top-1/2 left-1/4 w-[300px] h-[300px] bg-azure/5 rounded-full blur-3xl"
         animate={{
           scale: [1, 1.3, 1],
           opacity: [0.3, 0.6, 0.3],
@@ -225,10 +225,10 @@ export default function Hero() {
             >
               {/* Small label */}
               <motion.div
-                className="inline-block px-4 py-2 border border-neon-cyan/50 rounded-full mb-8"
-                whileHover={{ borderColor: "rgba(0, 255, 240, 1)", scale: 1.05 }}
+                className="inline-block px-4 py-2 border border-electric/50 rounded-full mb-8"
+                whileHover={{ borderColor: "rgba(65, 105, 225, 1)", scale: 1.05 }}
               >
-                <span className="text-neon-cyan text-sm font-mono uppercase tracking-wider">
+                <span className="text-electric text-sm font-mono uppercase tracking-wider">
                   Open to collaborate
                 </span>
               </motion.div>
@@ -236,7 +236,7 @@ export default function Hero() {
               {/* Name - HUGE and bold - static with fade-in */}
               <h1 className="mb-6 relative">
                 <motion.div
-                  className="text-[clamp(3rem,10vw,7rem)] font-black leading-[0.9] tracking-tighter text-neon-cyan"
+                  className="text-[clamp(3rem,10vw,7rem)] font-black leading-[0.9] tracking-tighter text-electric"
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, duration: 0.6 }}
@@ -278,9 +278,9 @@ export default function Hero() {
                 transition={{ delay: 0.6, duration: 0.6 }}
                 className="mb-4 min-h-[60px]"
               >
-                <p className="text-lg md:text-xl text-neon-cyan font-mono">
+                <p className="text-lg md:text-xl text-electric font-mono">
                   <span className="text-slate-500">&gt;</span> {currentText}
-                  <span className="inline-block w-2 h-5 bg-neon-cyan ml-1 animate-pulse"></span>
+                  <span className="inline-block w-2 h-5 bg-electric ml-1 animate-pulse"></span>
                 </p>
               </motion.div>
 
@@ -293,7 +293,7 @@ export default function Hero() {
               >
                 <motion.a
                   href="#projects"
-                  className="group relative px-8 py-4 bg-neon-cyan text-dark rounded-none font-bold text-lg overflow-hidden"
+                  className="group relative px-8 py-4 bg-electric text-dark rounded-none font-bold text-lg overflow-hidden"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -302,7 +302,7 @@ export default function Hero() {
                     <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20} />
                   </span>
                   <motion.div
-                    className="absolute inset-0 bg-neon-green"
+                    className="absolute inset-0 bg-azure"
                     initial={{ x: "-100%" }}
                     whileHover={{ x: 0 }}
                     transition={{ duration: 0.3 }}
@@ -331,34 +331,34 @@ export default function Hero() {
             >
               {/* Stacked cards/blocks effect */}
               <motion.div
-                className="absolute top-0 right-0 w-72 h-72 bg-gradient-to-br from-neon-cyan/20 to-transparent border border-neon-cyan/50 backdrop-blur-sm"
+                className="absolute top-0 right-0 w-72 h-72 bg-gradient-to-br from-electric/20 to-transparent border border-electric/50 backdrop-blur-sm"
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 4, repeat: Infinity }}
               >
                 <div className="p-6">
-                  <p className="text-neon-cyan font-mono text-sm mb-2">// EXPERTISE</p>
+                  <p className="text-electric font-mono text-sm mb-2">// EXPERTISE</p>
                   <p className="text-slate-200 text-lg font-bold">Full-Stack Development</p>
                 </div>
               </motion.div>
 
               <motion.div
-                className="absolute top-24 right-16 w-72 h-72 bg-gradient-to-br from-neon-pink/20 to-transparent border border-neon-pink/50 backdrop-blur-sm"
+                className="absolute top-24 right-16 w-72 h-72 bg-gradient-to-br from-navy-700/20 to-transparent border border-navy-700/50 backdrop-blur-sm"
                 animate={{ y: [0, 10, 0] }}
                 transition={{ duration: 5, repeat: Infinity }}
               >
                 <div className="p-6">
-                  <p className="text-neon-pink font-mono text-sm mb-2">// FOCUS</p>
+                  <p className="text-navy-700 font-mono text-sm mb-2">// FOCUS</p>
                   <p className="text-slate-200 text-lg font-bold">Cloud & DevOps</p>
                 </div>
               </motion.div>
 
               <motion.div
-                className="absolute top-48 right-32 w-72 h-72 bg-gradient-to-br from-neon-green/20 to-transparent border border-neon-green/50 backdrop-blur-sm"
+                className="absolute top-48 right-32 w-72 h-72 bg-gradient-to-br from-azure/20 to-transparent border border-azure/50 backdrop-blur-sm"
                 animate={{ y: [0, -15, 0] }}
                 transition={{ duration: 6, repeat: Infinity }}
               >
                 <div className="p-6">
-                  <p className="text-neon-green font-mono text-sm mb-2">// PASSION</p>
+                  <p className="text-azure font-mono text-sm mb-2">// PASSION</p>
                   <p className="text-slate-200 text-lg font-bold">Dev Tools & Automation</p>
                 </div>
               </motion.div>
@@ -385,7 +385,7 @@ export default function Hero() {
                   href={social.href}
                   target={social.label !== "Email" ? "_blank" : undefined}
                   rel={social.label !== "Email" ? "noopener noreferrer" : undefined}
-                  className="group flex items-center gap-2 text-slate-400 hover:text-neon-cyan transition-colors"
+                  className="group flex items-center gap-2 text-slate-400 hover:text-electric transition-colors"
                   whileHover={{ x: 5 }}
                 >
                   <social.icon size={20} />

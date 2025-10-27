@@ -81,7 +81,7 @@ function CategorySkills({
         style={{ y: titleY, opacity: titleOpacity }}
         className="text-2xl md:text-3xl font-black text-slate-50 uppercase mb-6 flex items-center gap-4"
       >
-        <span className="text-neon-cyan">///</span>
+        <span className="text-electric">///</span>
         {category}
       </motion.h3>
 
@@ -124,13 +124,13 @@ export default function Skills() {
       ref={ref}
       className="py-32 bg-dark relative overflow-hidden"
     >
-      <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-neon-green/5 blur-3xl" />
+      <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-azure/5 blur-3xl" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         <div className="mb-16">
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-16 h-1 bg-neon-cyan" />
-            <span className="text-neon-cyan font-mono text-sm uppercase tracking-widest">
+            <div className="w-16 h-1 bg-electric" />
+            <span className="text-electric font-mono text-sm uppercase tracking-widest">
               // TECHNICAL ARSENAL
             </span>
           </div>
@@ -163,7 +163,7 @@ export default function Skills() {
 
         <div className="mt-20">
           <h3 className="text-2xl md:text-3xl font-black text-slate-50 uppercase mb-6 flex items-center gap-4">
-            <span className="text-neon-green">///</span>
+            <span className="text-azure">///</span>
             CERTIFICATIONS
           </h3>
 
@@ -171,18 +171,18 @@ export default function Skills() {
             {certifications.map((cert) => (
               <div
                 key={cert.name}
-                className="border-2 border-neon-green/30 bg-navy-950 p-6 hover:border-neon-green hover:bg-navy-900 transition-all"
+                className="border-2 border-azure/30 bg-navy-950 p-6 hover:border-azure hover:bg-navy-900 transition-all"
               >
                 <div className="flex items-start gap-4">
-                  <div className="p-3 bg-neon-green/10">
-                    <Award className="text-neon-green" size={28} />
+                  <div className="p-3 bg-azure/10">
+                    <Award className="text-azure" size={28} />
                   </div>
                   <div className="flex-1">
                     <h4 className="font-black text-lg text-slate-50 mb-1 uppercase">
                       {cert.name}
                     </h4>
                     <p className="text-slate-400 text-sm mb-1">{cert.issuer}</p>
-                    <p className="text-neon-green text-xs font-mono">{cert.date}</p>
+                    <p className="text-azure text-xs font-mono">{cert.date}</p>
                   </div>
                 </div>
               </div>
@@ -190,9 +190,9 @@ export default function Skills() {
           </div>
         </div>
 
-        <div className="mt-12 border-l-4 border-neon-pink pl-6 py-4">
+        <div className="mt-12 border-l-4 border-navy-700 pl-6 py-4">
           <p className="text-slate-400 font-mono text-sm">
-            <span className="text-neon-pink font-bold">NOTE:</span> All skills listed represent
+            <span className="text-navy-700 font-bold">NOTE:</span> All skills listed represent
             hands-on production experience and active project work. Constantly learning and
             expanding the toolkit.
           </p>

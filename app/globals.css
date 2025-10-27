@@ -5,8 +5,8 @@ html {
 }
 
 body {
-  background-color: #101419;
-  color: #F1F1F1;
+  background-color: #0A0E27;
+  color: #F8F8FF;
   font-feature-settings: "rlig" 1, "calt" 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -82,7 +82,7 @@ h3 {
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #101419;
+  background-color: #0A0E27;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -91,13 +91,13 @@ h3 {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #00FFF0;
+  background-color: #4169E1;
 }
 
 /* Selection */
 ::selection {
-  background-color: rgba(0, 255, 240, 0.3);
-  color: #101419;
+  background-color: rgba(65, 105, 225, 0.3);
+  color: #F8F8FF;
 }
 
 /* Animations */

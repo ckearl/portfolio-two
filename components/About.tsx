@@ -25,8 +25,8 @@ export default function About() {
       className="py-32 bg-navy-950 relative overflow-hidden"
     >
       {/* Geometric background */}
-      <div className="absolute top-20 right-0 w-96 h-96 bg-neon-pink/5 blur-3xl" />
-      <div className="absolute bottom-20 left-0 w-96 h-96 bg-neon-cyan/5 blur-3xl" />
+      <div className="absolute top-20 right-0 w-96 h-96 bg-navy-700/5 blur-3xl" />
+      <div className="absolute bottom-20 left-0 w-96 h-96 bg-electric/5 blur-3xl" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -37,8 +37,8 @@ export default function About() {
           className="mb-16"
         >
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-16 h-1 bg-neon-cyan" />
-            <span className="text-neon-cyan font-mono text-sm uppercase tracking-widest">
+            <div className="w-16 h-1 bg-electric" />
+            <span className="text-electric font-mono text-sm uppercase tracking-widest">
               // WHO I AM
             </span>
           </div>
@@ -60,13 +60,13 @@ export default function About() {
             </p>
 
             {/* Education Block - Hero card style */}
-            <div className="relative border-2 border-neon-green/30 bg-gradient-to-br from-neon-green/10 to-transparent backdrop-blur-sm p-6">
+            <div className="relative border-2 border-azure/30 bg-gradient-to-br from-azure/10 to-transparent backdrop-blur-sm p-6">
               <div className="flex items-start gap-4">
-                <div className="p-3 bg-neon-green/10">
-                  <Code2 className="text-neon-green flex-shrink-0" size={24} />
+                <div className="p-3 bg-azure/10">
+                  <Code2 className="text-azure flex-shrink-0" size={24} />
                 </div>
                 <div>
-                  <p className="text-neon-green font-mono text-xs uppercase tracking-wider mb-2">
+                  <p className="text-azure font-mono text-xs uppercase tracking-wider mb-2">
                     // EDUCATION
                   </p>
                   <h3 className="text-xl font-bold text-slate-50 mb-2">
@@ -98,7 +98,7 @@ export default function About() {
             {achievements.map((achievement, idx) => {
               const icons = { music: Music, globe: Globe, award: Award };
               const Icon = icons[achievement.icon as keyof typeof icons];
-              const colors = ["neon-cyan", "neon-pink", "neon-green"];
+              const colors = ["electric", "navy-700", "azure"];
               const color = colors[idx % 3];
 
               return (
@@ -144,7 +144,7 @@ export default function About() {
               key={idx}
               className="text-center border border-slate-400/20 bg-dark/50 p-6"
             >
-              <div className="text-4xl font-black text-neon-cyan mb-2">{stat.value}</div>
+              <div className="text-4xl font-black text-electric mb-2">{stat.value}</div>
               <div className="text-xs text-slate-400 font-mono uppercase tracking-widest">
                 {stat.label}
               </div>

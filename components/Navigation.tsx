@@ -40,7 +40,7 @@ export default function Navigation() {
       }}
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.35, ease: "easeInOut" }}
-      className="fixed top-0 left-0 right-0 z-50 bg-dark/90 backdrop-blur-md border-b border-neon-cyan/20"
+      className="fixed top-0 left-0 right-0 z-50 bg-dark/90 backdrop-blur-md border-b border-electric/20"
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
@@ -51,7 +51,7 @@ export default function Navigation() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <span className="text-neon-cyan">C</span>K
+            <span className="text-electric">C</span>K
           </motion.a>
 
           {/* Desktop Navigation */}
@@ -60,20 +60,20 @@ export default function Navigation() {
               <motion.a
                 key={item.name}
                 href={item.href}
-                className="text-sm font-bold text-slate-400 hover:text-neon-cyan transition-colors relative group tracking-wider"
+                className="text-sm font-bold text-slate-400 hover:text-electric transition-colors relative group tracking-wider"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1 }}
               >
                 {item.name}
-                <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-neon-cyan group-hover:w-full transition-all duration-300" />
+                <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-electric group-hover:w-full transition-all duration-300" />
               </motion.a>
             ))}
 
             {/* Theme Toggle - Minimal */}
             <motion.button
               onClick={toggleTheme}
-              className="p-2 text-slate-400 hover:text-neon-cyan transition-colors"
+              className="p-2 text-slate-400 hover:text-electric transition-colors"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               aria-label="Toggle theme"
@@ -111,7 +111,7 @@ export default function Navigation() {
           opacity: isOpen ? 1 : 0,
         }}
         transition={{ duration: 0.3 }}
-        className="md:hidden overflow-hidden bg-navy-900/95 backdrop-blur-lg border-t border-neon-cyan/20"
+        className="md:hidden overflow-hidden bg-navy-900/95 backdrop-blur-lg border-t border-electric/20"
       >
         <div className="px-6 py-6 space-y-4">
           {navItems.map((item) => (
@@ -119,7 +119,7 @@ export default function Navigation() {
               key={item.name}
               href={item.href}
               onClick={() => setIsOpen(false)}
-              className="block py-3 text-slate-200 hover:text-neon-cyan transition-colors font-bold tracking-wider border-l-2 border-transparent hover:border-neon-cyan pl-4"
+              className="block py-3 text-slate-200 hover:text-electric transition-colors font-bold tracking-wider border-l-2 border-transparent hover:border-electric pl-4"
             >
               {item.name}
             </a>

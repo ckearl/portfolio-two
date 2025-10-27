@@ -12,13 +12,13 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-dark border-t-2 border-neon-cyan/20 py-16">
+    <footer className="bg-dark border-t-2 border-electric/20 py-16">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid md:grid-cols-3 gap-12 mb-12">
           {/* Brand */}
           <div>
             <h3 className="text-3xl font-black text-slate-50 mb-4 tracking-tighter">
-              <span className="text-neon-cyan">C</span>K
+              <span className="text-electric">C</span>K
             </h3>
             <p className="text-slate-400 leading-relaxed mb-6">
               Software Engineer crafting elegant solutions at the intersection of technology and
@@ -26,9 +26,9 @@ export default function Footer() {
             </p>
             <div className="flex gap-4">
               {[
-                { icon: Github, href: personalInfo.github, color: "neon-cyan" },
-                { icon: Linkedin, href: personalInfo.linkedin, color: "neon-green" },
-                { icon: Mail, href: `mailto:${personalInfo.email}`, color: "neon-pink" },
+                { icon: Github, href: personalInfo.github, color: "electric" },
+                { icon: Linkedin, href: personalInfo.linkedin, color: "azure" },
+                { icon: Mail, href: `mailto:${personalInfo.email}`, color: "navy-700" },
               ].map((social, idx) => (
                 <motion.a
                   key={idx}
@@ -60,7 +60,7 @@ export default function Footer() {
                 <li key={item.name}>
                   <a
                     href={item.href}
-                    className="text-slate-400 hover:text-neon-cyan transition-colors text-sm font-mono"
+                    className="text-slate-400 hover:text-electric transition-colors text-sm font-mono"
                   >
                     // {item.name}
                   </a>
@@ -80,7 +80,7 @@ export default function Footer() {
                 <br />
                 <a
                   href={`mailto:${personalInfo.email}`}
-                  className="text-slate-300 hover:text-neon-cyan transition-colors"
+                  className="text-slate-300 hover:text-electric transition-colors"
                 >
                   {personalInfo.email}
                 </a>
@@ -90,7 +90,7 @@ export default function Footer() {
                 <br />
                 <a
                   href={`tel:${personalInfo.phone}`}
-                  className="text-slate-300 hover:text-neon-green transition-colors"
+                  className="text-slate-300 hover:text-azure transition-colors"
                 >
                   {personalInfo.phone}
                 </a>
@@ -107,16 +107,16 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-slate-400/20 flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="text-sm text-slate-500 font-mono text-center md:text-left">
-            <span className="text-neon-cyan">©</span> {currentYear} {personalInfo.name} • Built with{" "}
-            <span className="text-neon-pink">Next.js</span> &{" "}
-            <span className="text-neon-green">TypeScript</span>
+            <span className="text-electric">©</span> {currentYear} {personalInfo.name} • Built with{" "}
+            <span className="text-navy-700">Next.js</span> &{" "}
+            <span className="text-azure">TypeScript</span>
           </div>
 
           <button
             onClick={scrollToTop}
-            className="group border-2 border-neon-cyan/30 p-3 hover:border-neon-cyan hover:bg-neon-cyan/10 transition-all"
+            className="group border-2 border-electric/30 p-3 hover:border-electric hover:bg-electric/10 transition-all"
           >
-            <ArrowUp className="text-neon-cyan group-hover:scale-110 transition-transform" size={20} />
+            <ArrowUp className="text-electric group-hover:scale-110 transition-transform" size={20} />
           </button>
         </div>
       </div>

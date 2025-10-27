@@ -17,7 +17,7 @@ export default function Experience() {
       className="py-32 bg-navy-950 relative overflow-hidden"
     >
       {/* Geometric background */}
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-neon-cyan/5 blur-3xl" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-electric/5 blur-3xl" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -27,8 +27,8 @@ export default function Experience() {
           className="mb-16"
         >
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-16 h-1 bg-neon-pink" />
-            <span className="text-neon-pink font-mono text-sm uppercase tracking-widest">
+            <div className="w-16 h-1 bg-navy-700" />
+            <span className="text-navy-700 font-mono text-sm uppercase tracking-widest">
               // CAREER PATH
             </span>
           </div>
@@ -51,8 +51,8 @@ export default function Experience() {
                 whileHover={{ x: 8, transition: { duration: 0.3 } }}
                 className={`border-2 transition-colors ${
                   isExpanded
-                    ? "border-neon-pink bg-navy-900"
-                    : "border-slate-400/20 bg-dark hover:border-neon-pink/50"
+                    ? "border-navy-700 bg-navy-900"
+                    : "border-slate-400/20 bg-dark hover:border-navy-700/50"
                 }`}
               >
                 {/* Job Header - Always Visible */}
@@ -65,12 +65,12 @@ export default function Experience() {
                       <h3 className="text-2xl md:text-3xl font-black text-slate-50 uppercase">
                         {job.title}
                       </h3>
-                      <span className="px-3 py-1 bg-neon-pink text-dark text-xs font-bold uppercase tracking-wider">
+                      <span className="px-3 py-1 bg-navy-700 text-dark text-xs font-bold uppercase tracking-wider">
                         {job.type}
                       </span>
                     </div>
 
-                    <p className="text-neon-pink font-bold text-lg mb-3">{job.company}</p>
+                    <p className="text-navy-700 font-bold text-lg mb-3">{job.company}</p>
 
                     <div className="flex flex-wrap gap-4 text-sm text-slate-400">
                       <span className="flex items-center gap-2">
@@ -85,7 +85,7 @@ export default function Experience() {
                   </div>
 
                   <div className={`transition-transform ${isExpanded ? "rotate-90" : ""}`}>
-                    <ArrowRight className="text-neon-pink" size={24} />
+                    <ArrowRight className="text-navy-700" size={24} />
                   </div>
                 </button>
 
@@ -99,7 +99,7 @@ export default function Experience() {
                   transition={{ duration: 0.3 }}
                   className="overflow-hidden"
                 >
-                  <div className="px-8 pb-8 space-y-6 border-t border-neon-pink/30 pt-6">
+                  <div className="px-8 pb-8 space-y-6 border-t border-navy-700/30 pt-6">
                     {/* Description */}
                     <p className="text-slate-300 text-lg leading-relaxed">
                       {job.description}
@@ -107,13 +107,13 @@ export default function Experience() {
 
                     {/* Responsibilities */}
                     <div>
-                      <h4 className="text-neon-cyan font-bold text-sm uppercase tracking-wider mb-3">
+                      <h4 className="text-electric font-bold text-sm uppercase tracking-wider mb-3">
                         KEY RESPONSIBILITIES
                       </h4>
                       <ul className="space-y-3">
                         {job.responsibilities.map((resp, idx) => (
                           <li key={idx} className="flex items-start gap-3 text-slate-300">
-                            <span className="text-neon-pink mt-1 font-bold">▸</span>
+                            <span className="text-navy-700 mt-1 font-bold">▸</span>
                             <span>{resp}</span>
                           </li>
                         ))}
@@ -122,14 +122,14 @@ export default function Experience() {
 
                     {/* Tech Stack */}
                     <div>
-                      <h4 className="text-neon-green font-bold text-sm uppercase tracking-wider mb-3">
+                      <h4 className="text-azure font-bold text-sm uppercase tracking-wider mb-3">
                         TECH STACK
                       </h4>
                       <div className="flex flex-wrap gap-2">
                         {job.technologies.map((tech, idx) => (
                           <span
                             key={idx}
-                            className="px-3 py-2 bg-dark border border-neon-green/30 text-neon-green text-sm font-mono"
+                            className="px-3 py-2 bg-dark border border-azure/30 text-azure text-sm font-mono"
                           >
                             {tech}
                           </span>

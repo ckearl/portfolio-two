@@ -22,7 +22,7 @@ export default function Projects() {
       className="py-32 bg-dark relative overflow-hidden"
     >
       {/* Geometric shapes */}
-      <div className="absolute top-0 left-1/4 w-72 h-72 bg-neon-green/5 blur-3xl" />
+      <div className="absolute top-0 left-1/4 w-72 h-72 bg-azure/5 blur-3xl" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -32,8 +32,8 @@ export default function Projects() {
           className="mb-16"
         >
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-16 h-1 bg-neon-green" />
-            <span className="text-neon-green font-mono text-sm uppercase tracking-widest">
+            <div className="w-16 h-1 bg-azure" />
+            <span className="text-azure font-mono text-sm uppercase tracking-widest">
               // WORK SHOWCASE
             </span>
           </div>
@@ -49,8 +49,8 @@ export default function Projects() {
                 onClick={() => setSelectedCategory(category)}
                 className={`px-6 py-3 font-bold text-sm uppercase tracking-wider transition-all border-2 ${
                   selectedCategory === category
-                    ? "bg-neon-cyan text-dark border-neon-cyan"
-                    : "bg-transparent text-slate-400 border-slate-400/30 hover:border-neon-cyan hover:text-neon-cyan"
+                    ? "bg-electric text-dark border-electric"
+                    : "bg-transparent text-slate-400 border-slate-400/30 hover:border-electric hover:text-electric"
                 }`}
               >
                 {category}
@@ -68,13 +68,13 @@ export default function Projects() {
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 80 }}
               transition={{ delay: idx * 0.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               whileHover={{ y: -8, transition: { duration: 0.3 } }}
-              className="group bg-navy-950 border-2 border-slate-400/20 hover:border-neon-cyan overflow-hidden transition-colors"
+              className="group bg-navy-950 border-2 border-slate-400/20 hover:border-electric overflow-hidden transition-colors"
             >
               {/* Image Placeholder */}
               <div className="relative aspect-video bg-gradient-to-br from-navy-900 to-dark overflow-hidden">
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
-                  <div className="w-20 h-20 border-4 border-neon-cyan/30 mb-6 flex items-center justify-center">
-                    <ArrowUpRight className="text-neon-cyan" size={32} />
+                  <div className="w-20 h-20 border-4 border-electric/30 mb-6 flex items-center justify-center">
+                    <ArrowUpRight className="text-electric" size={32} />
                   </div>
                   <p className="text-slate-400 font-mono text-sm uppercase tracking-wider">
                     Project Screenshot
@@ -83,7 +83,7 @@ export default function Projects() {
                 </div>
 
                 {/* Category badge */}
-                <div className="absolute top-4 right-4 bg-neon-pink px-4 py-2 text-dark font-bold text-xs uppercase tracking-wider">
+                <div className="absolute top-4 right-4 bg-navy-700 px-4 py-2 text-dark font-bold text-xs uppercase tracking-wider">
                   {project.category}
                 </div>
 
@@ -98,7 +98,7 @@ export default function Projects() {
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-4 border-2 border-neon-cyan text-neon-cyan hover:bg-neon-cyan hover:text-dark transition-all"
+                      className="p-4 border-2 border-electric text-electric hover:bg-electric hover:text-dark transition-all"
                     >
                       <Github size={24} />
                     </a>
@@ -108,7 +108,7 @@ export default function Projects() {
                       href={project.demo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-4 border-2 border-neon-green text-neon-green hover:bg-neon-green hover:text-dark transition-all"
+                      className="p-4 border-2 border-azure text-azure hover:bg-azure hover:text-dark transition-all"
                     >
                       <ExternalLink size={24} />
                     </a>
@@ -122,7 +122,7 @@ export default function Projects() {
                   <h3 className="text-3xl font-black text-slate-50 uppercase tracking-tight">
                     {project.title}
                   </h3>
-                  <span className="text-neon-cyan font-mono text-sm">{project.year}</span>
+                  <span className="text-electric font-mono text-sm">{project.year}</span>
                 </div>
 
                 <p className="text-slate-300 mb-6 leading-relaxed">
@@ -134,7 +134,7 @@ export default function Projects() {
                   {project.technologies.slice(0, 5).map((tech, idx) => (
                     <span
                       key={idx}
-                      className="px-3 py-1 bg-navy-900 text-neon-cyan text-xs font-mono border border-neon-cyan/30"
+                      className="px-3 py-1 bg-navy-900 text-electric text-xs font-mono border border-electric/30"
                     >
                       {tech}
                     </span>
@@ -155,7 +155,7 @@ export default function Projects() {
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-slate-500 hover:text-neon-cyan transition-colors"
+                        className="text-slate-500 hover:text-electric transition-colors"
                       >
                         <Github size={18} />
                       </a>
@@ -165,7 +165,7 @@ export default function Projects() {
                         href={project.demo}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-slate-500 hover:text-neon-green transition-colors"
+                        className="text-slate-500 hover:text-azure transition-colors"
                       >
                         <ExternalLink size={18} />
                       </a>

@@ -36,7 +36,7 @@ export default function Contact() {
       className="py-32 bg-navy-950 relative overflow-hidden"
     >
       {/* Geometric background */}
-      <div className="absolute top-1/2 left-0 w-96 h-96 bg-neon-pink/5 blur-3xl" />
+      <div className="absolute top-1/2 left-0 w-96 h-96 bg-navy-700/5 blur-3xl" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -46,11 +46,11 @@ export default function Contact() {
           className="mb-16 text-center"
         >
           <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="w-16 h-1 bg-neon-green" />
-            <span className="text-neon-green font-mono text-sm uppercase tracking-widest">
+            <div className="w-16 h-1 bg-azure" />
+            <span className="text-azure font-mono text-sm uppercase tracking-widest">
               // LET'S CONNECT
             </span>
-            <div className="w-16 h-1 bg-neon-green" />
+            <div className="w-16 h-1 bg-azure" />
           </div>
           <h2 className="text-6xl md:text-7xl lg:text-8xl font-black text-slate-50 tracking-tighter">
             GET IN TOUCH
@@ -69,11 +69,11 @@ export default function Contact() {
             <div className="space-y-4">
               <a
                 href={`mailto:${personalInfo.email}`}
-                className="block border-2 border-neon-cyan/30 bg-dark p-6 hover:border-neon-cyan hover:bg-navy-900 transition-all group"
+                className="block border-2 border-electric/30 bg-dark p-6 hover:border-electric hover:bg-navy-900 transition-all group"
               >
                 <div className="flex items-center gap-4">
-                  <div className="p-3 bg-neon-cyan/10 group-hover:bg-neon-cyan/20 transition-colors">
-                    <Mail className="text-neon-cyan" size={24} />
+                  <div className="p-3 bg-electric/10 group-hover:bg-electric/20 transition-colors">
+                    <Mail className="text-electric" size={24} />
                   </div>
                   <div>
                     <p className="text-xs text-slate-500 uppercase tracking-wider mb-1">Email</p>
@@ -84,11 +84,11 @@ export default function Contact() {
 
               <a
                 href={`tel:${personalInfo.phone}`}
-                className="block border-2 border-neon-green/30 bg-dark p-6 hover:border-neon-green hover:bg-navy-900 transition-all group"
+                className="block border-2 border-azure/30 bg-dark p-6 hover:border-azure hover:bg-navy-900 transition-all group"
               >
                 <div className="flex items-center gap-4">
-                  <div className="p-3 bg-neon-green/10 group-hover:bg-neon-green/20 transition-colors">
-                    <Phone className="text-neon-green" size={24} />
+                  <div className="p-3 bg-azure/10 group-hover:bg-azure/20 transition-colors">
+                    <Phone className="text-azure" size={24} />
                   </div>
                   <div>
                     <p className="text-xs text-slate-500 uppercase tracking-wider mb-1">Phone</p>
@@ -97,10 +97,10 @@ export default function Contact() {
                 </div>
               </a>
 
-              <div className="border-2 border-neon-pink/30 bg-dark p-6">
+              <div className="border-2 border-navy-700/30 bg-dark p-6">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 bg-neon-pink/10">
-                    <MapPin className="text-neon-pink" size={24} />
+                  <div className="p-3 bg-navy-700/10">
+                    <MapPin className="text-navy-700" size={24} />
                   </div>
                   <div>
                     <p className="text-xs text-slate-500 uppercase tracking-wider mb-1">Location</p>
@@ -118,24 +118,24 @@ export default function Contact() {
                   href={personalInfo.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 border-2 border-slate-400/30 p-4 flex items-center justify-center gap-2 hover:border-neon-cyan hover:bg-navy-900 transition-all group"
+                  className="flex-1 border-2 border-slate-400/30 p-4 flex items-center justify-center gap-2 hover:border-electric hover:bg-navy-900 transition-all group"
                 >
-                  <Linkedin className="text-slate-400 group-hover:text-neon-cyan transition-colors" size={20} />
+                  <Linkedin className="text-slate-400 group-hover:text-electric transition-colors" size={20} />
                 </a>
                 <a
                   href={personalInfo.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 border-2 border-slate-400/30 p-4 flex items-center justify-center gap-2 hover:border-neon-cyan hover:bg-navy-900 transition-all group"
+                  className="flex-1 border-2 border-slate-400/30 p-4 flex items-center justify-center gap-2 hover:border-electric hover:bg-navy-900 transition-all group"
                 >
-                  <Github className="text-slate-400 group-hover:text-neon-cyan transition-colors" size={20} />
+                  <Github className="text-slate-400 group-hover:text-electric transition-colors" size={20} />
                 </a>
               </div>
             </div>
 
             {/* Availability */}
-            <div className="border-l-4 border-neon-green pl-6 py-4 bg-navy-900">
-              <p className="text-neon-green font-bold text-sm uppercase tracking-wider mb-2">
+            <div className="border-l-4 border-azure pl-6 py-4 bg-navy-900">
+              <p className="text-azure font-bold text-sm uppercase tracking-wider mb-2">
                 WANT TO CONNECT?
               </p>
               <p className="text-slate-300 text-sm leading-relaxed">
@@ -163,7 +163,7 @@ export default function Contact() {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-4 bg-dark border-2 border-slate-400/30 text-slate-50 focus:border-neon-cyan focus:outline-none transition-all"
+                    className="w-full px-4 py-4 bg-dark border-2 border-slate-400/30 text-slate-50 focus:border-electric focus:outline-none transition-all"
                     placeholder="John Doe"
                   />
                 </div>
@@ -177,7 +177,7 @@ export default function Contact() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-4 bg-dark border-2 border-slate-400/30 text-slate-50 focus:border-neon-cyan focus:outline-none transition-all"
+                    className="w-full px-4 py-4 bg-dark border-2 border-slate-400/30 text-slate-50 focus:border-electric focus:outline-none transition-all"
                     placeholder="john@example.com"
                   />
                 </div>
@@ -193,7 +193,7 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   rows={8}
-                  className="w-full px-4 py-4 bg-dark border-2 border-slate-400/30 text-slate-50 focus:border-neon-cyan focus:outline-none transition-all resize-none"
+                  className="w-full px-4 py-4 bg-dark border-2 border-slate-400/30 text-slate-50 focus:border-electric focus:outline-none transition-all resize-none"
                   placeholder="Tell me about your project..."
                 />
               </div>
@@ -203,8 +203,8 @@ export default function Contact() {
                 disabled={isSubmitting}
                 className={`w-full px-8 py-4 font-bold text-lg uppercase tracking-wider flex items-center justify-center gap-3 transition-all ${
                   submitStatus === "success"
-                    ? "bg-neon-green text-dark"
-                    : "bg-neon-cyan text-dark hover:bg-neon-green"
+                    ? "bg-azure text-dark"
+                    : "bg-electric text-dark hover:bg-azure"
                 }`}
               >
                 {isSubmitting ? (
